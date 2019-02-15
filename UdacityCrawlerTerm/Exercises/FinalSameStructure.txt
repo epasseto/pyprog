@@ -1,0 +1,55 @@
+def same_structure(a,b):
+    print 'initial a:',a,'initial b:',b
+    if is_list(a) == False and is_list(b) == False: #no structure, only variables!
+        return True
+    if is_list(a) == True and is_list(b) == False:
+        return False
+    if is_list(a) == False and is_list(b) == True:
+        return False
+    if len(a) != len(b): #first test, flat structure, lenghts
+        return False
+    worka = []
+    workb = []
+    cont = 0
+    while cont < len(a): #first, non-destructive
+        X1 = a[cont]
+        X2 = b[cont]
+        if is_list(X1) == True and is_list(X2) == False: #elementar structure comparison
+            return False
+        if is_list(X1) == False and is_list(X2) == True:
+            return False
+        if is_list(X1) == True: #begins feeling work structures
+            worka.append(X1) 
+        if is_list(X2) == True:
+            workb.append(X2)
+        cont = cont + 1
+    if X1 == [] and X2 == []:
+        return True
+        Xa = []
+        Xb = []
+    contb = 0
+    fake = True
+    while fake == True: #second, destructive
+        if is_list(X1) == False and is_list(X2) == False: #no structure, only variables!
+            return True
+        if is_list(X1) == True and is_list(X2) == False:
+            return False
+        if is_list(X1) == False and is_list(X2) == True:
+            return False
+        if len(X1) != len(X2):
+            return False
+        while cont < len(X1): 
+            Xa = X1[cont]
+            Xb = X2[cont]
+            if is_list(X1) == True and is_list(X1) == False: #elementar structure comparison
+                return False
+            if is_list(X1) == False and is_list(X1) == True:
+                return False
+            if is_list(X1) == True: #begins feeling work structures
+                worka.append(Xa) 
+            if is_list(X1) == True:
+                workb.append(Xa)
+        X1 = worka
+        X2 = workb
+        if X1 == []:
+            return True

@@ -1,0 +1,751 @@
+﻿###Dicas de comandos para o Pandas
+# Obs: o Pandas usa muito mais apontadores do que o Python normal, que usa mais variáveis com posições de memória!
+# Obs: sempre que possível criar funções e bibliotecas de funções, paralelizar processos e usar yield!
+
+### Aula 1_11
+# Ativa e leitura do csv
+import pandas as pd
+df = pd.read_csv('cancer_data.csv')
+
+# Rótulos das colunas
+for i, v in enumerate(df.columns):
+    print(i, v)
+
+### Aula 1_14
+# Mudando o separador e a linha do cabeçalho
+('student_scores.csv', sep=':', header=2) (header=None)
+
+# Colocando nomes melhores de cabeçalho
+labels = ['id', 'name', 'attendance', 'hw', 'test1', 'project1', 'test2', 'project2', 'final']
+df = pd.read_csv('student_scores.csv', names=labels)
+
+# Selecionando coluna como índice
+df = pd.read_csv('student_scores.csv', index_col='Name') (index_col=['Name', 'ID']) (index=False)
+
+### Aula 1_15 'cancer_data.csv'
+# Tupla com as mesmas dimensões do dataframe
+df.shape
+
+# Tipos de dados das colunas
+df.dtypes
+
+# Embora o tipo de dados da coluna 'diagnosis' pareça ser 'object', uma investigação mais profunda
+type(df['diagnosis'][0])
+
+# Resumo conciso do dataframe,
+# incluindo o número de valores não-nulos em cada coluna
+df.info()
+
+# Número de valores únicos em cada coluna
+df.nunique()
+
+# Estatísticas descritivas úteis para cada coluna de dados
+df.describe()
+
+# Cabeçalho com 5 ou 20 linhas e cauda
+df.head(), df.head(20), df.tail(2)
+
+# Índice e rótulo de cada coluna
+for i, v in enumerate(df.columns):
+    print(i, v)
+
+# Todas as colunas desde 'id' até a última coluna relacionada à média
+df_means = df.loc[:,'id':'fractal_dimension_mean'] #linha, coluna	
+
+# Com índices
+df_means = df.iloc[:,:11]
+
+# Salvar para mais tarde
+df_means.to_csv('cancer_data_means.csv', index=False)
+	
+# Fatiar dataframe usando vários pedaços
+desvio_padrao = df.iloc[:, np.r_[:2, 12:len(df.columns)]]	
+	
+### Aula 1_19 "cancer_data_means.csv"
+# Médias para preencher valores ausentes - Obs: esta não é uma prática aconselhável!
+df_cancer['texture_mean'].fillna(df_cancer['texture_mean'].mean(), inplace=True)
+df_cancer['smoothness_mean'].fillna(df_cancer['smoothness_mean'].mean(), inplace=True)
+df_cancer['symmetry_mean'].fillna(df_cancer['symmetry_mean'].mean(), inplace=True)
+# confirme sua correção com info()
+df_cancer.info()
+
+# verifique se há dados duplicado
+# como reutilizaremos a verificação, vamos criar uma função para treinar
+def has_duplicate(df):
+    if df_cancer.duplicated().any():
+        print("Possui {0} valores duplicados".format(df.duplicated().sum()))
+    else:
+        print("Não possui valores duplicados")
+        
+has_duplicate(df_cancer)	
+
+# elimine dados duplicados
+df_cancer.drop_duplicates(inplace=True)
+# confirme correção verificando novamente se há dados duplicados
+has_duplicate(df_cancer)
+
+# remova "_mean" dos nomes das colunas
+new_labels = []
+for col in df_cancer.columns:
+    if '_mean' in col:
+        new_labels.append(col[:-5])  # exclua os últimos 6 caracteres
+    else:
+        new_labels.append(col)
+
+# novos rótulos para nossas colunas
+new_labels
+
+# atribua novos rótulos às colunas do dataframe
+df_cancer.columns = new_labels
+
+# exiba as primeiras linhas do dataframe para confirmar as alterações
+df_cancer.head()
+
+# salve as alterações para mais tarde
+df_cancer.to_csv('cancer_data_edited.csv', index=False)
+
+### Aula 1_22 "powerplant_data_edited.csv"
+# Nomes melhores
+df_power.columns = ['Ambient Temperature', 'Exhaust Vacuum', 
+                    'Ambient Pressure', 'Relative Humidity', 
+                    'Energy Output']
+
+# Todos os gráficos					
+pd.plotting.scatter_matrix(dfp, figsize=(15,15));
+					
+# Gráfico com a relação entre temperatura e saída elétrica
+# pos ou neg: https://www.emathzone.com/tutorials/basic-statistics/positive-and-negative-correlation.html
+df_power.plot(kind="scatter", x="Ambient Temperature", y="Energy Output");
+
+# Gráfico com a distribuição da umidade
+# distribuição normal: https://en.wikipedia.org/wiki/Normal_distribution
+df_power["Relative Humidity"].hist();
+
+# Gráfico de caixas para cada variável
+# outliers em boxplots: https://www.r-statistics.com/2011/01/how-to-label-all-the-outliers-in-a-boxplot/
+df_power.plot(kind="box", figsize=(15,15));
+
+
+### Aula 1_25 "store_data.csv"
+# Filtrando pelo período
+df_store['week']
+
+# Vendeu mais durante a semana de 13 de março de 2016
+print("Loja que mais vendeu durante a semana de 13 de março de 2016: {0}".format(
+            df_store[(df_store['week'] > '2016-03-12') & 
+             (df_store['week'] < '2016-03-21')].sum(axis=0)[1:].idxmax()))
+
+# Pior resultado
+print("A loja C tem o pior resultado de vendas na semana: {0}".format(
+        df_store.iloc[df_store['storeC'].idxmin()]['week']))
+
+# Podemos ver as últimas linhas
+last_period = df_store.tail(1)
+
+# Converter a string para datetime
+df_store['week'] = pd.to_datetime(df_store['week'] )
+
+# Calcular os últimos 3 meses
+period_start = df_store['week'].max() -  pd.DateOffset(months=3)
+period_end = df_store['week'].max()
+
+print("A loja que mais vendeu nos últimos 3 meses foi:{0}".format(
+       df_store[(df_store['week'] >= period_start) & 
+             (df_store['week'] <= period_end)].sum(axis=0).idxmax()))
+
+### Aula 2_5 ("winequality-red.csv") "winequality-white.csv")
+print("White possui {0} amostras e {1} colunas".format(
+        df_white.shape[0], df_white.shape[1] ))
+		
+df_white.isnull().any()
+
+# linhas duplicadas no conjunto de dados sobre vinho branco
+print(" Duplicadas tinto: {0} \n Duplicadas branco: {1}".format(
+        df_red.duplicated().sum(), df_white.duplicated().sum()))
+		
+# número de valores únicos para qualidade em cada conjunto de dados
+print(" Valores únicos para qualidade tinto: {0} \n Valores Únicos para qualidade Branco: {1}".format(
+        df_red['quality'].nunique(), df_white['quality'].nunique()))
+		
+#densidade média do conjunto de dados sobre vinho tinto
+print(" Densidade média branco: {0} \n Densidade média tinto: {1}".format(
+        df_white["density"].mean(), df_red["density"].mean()))
+		
+### Aula 2_7 #numpy - biblitecas especializadas científicas, com performance muito mais elevada
+# importe o numpy e o pandas
+import pandas as pd
+import numpy as np
+
+# carregue os conjuntos de dados de vinhos tintos e brancos
+red_df = pd.read_csv("winequality-red.csv", delimiter=";")
+white_df = pd.read_csv("winequality-white.csv", delimiter=";")
+
+# crie vetor de cor para o dataframe tinto
+color_red = np.repeat("red", red_df.shape[0]) #do tamanho do número de linhas da tabela!
+print(color_red)
+# crie vetor de cor para o dataframe branco
+color_white = np.repeat("white", white_df.shape[0])
+print(color_white)
+
+# Adicione os vetores de cor aos dataframes tinto e branco. 
+# Faça isso associando uma nova coluna chamada 'color' ao vetor apropriado. 
+red_df['color'] = color_red
+red_df.head()
+
+white_df['color'] = color_white
+white_df.head()
+
+# anexe dataframes com .append() *dá para fazer com merge!
+wine_df = white_df.append(red_df)
+wine_df.head()
+print(" Branco Original:{0} \n Tinto Original:{1}\n Combinado:{2}".format(white_df.shape, red_df.shape, wine_df.shape))
+wine_df.to_csv("winequality_edited.csv", index=False) #sem índice, pois esta coluna não recebeu nome!
+
+# descrição do mesmo problema, apresentando as duplicatas:
+avt = pd.read_csv("winequality-red.csv", sep=";")
+avv = pd.read_csv("winequality-white.csv", sep=";")
+print("vinho tinto")
+print(avt.head())
+print(avt.shape)
+print(avt.info())
+print(avt.duplicated().sum())
+print("amostras", avt.shape[0] - avt.duplicated().sum())
+print(avt.describe())
+#avt.drop_duplicates(inplace=True)
+#print("novo tamanho :", avt.shape)
+print("#")
+print("vinho verde")
+print(avv.head())
+print(avv.shape)
+avv.info()
+print("duplicadas :",avv.duplicated().sum())
+print("amostras :", avv.shape[0] - avv.duplicated().sum())
+print(avv.describe())
+
+### Aula 2.11 ("winequality_edited.csv")
+# Histogramas
+df_wine["fixed_acidity"].plot(kind="hist", title="Acidez");
+df_wine["total_sulfur_dioxide"].plot(kind="hist", title="Dióxido de Enxofre");
+df_wine["pH"].plot(kind="hist", title="pH ");
+df_wine["alcohol"].plot(kind="hist", title="Álcool");
+
+# Diagramas de dispersão
+df_wine.plot(kind='scatter', x='volatile_acidity', y='quality');
+df_wine.plot(kind='scatter', x='residual_sugar', y='quality');
+df_wine.plot(kind='scatter', x='pH', y='quality');
+df_wine.plot(kind='scatter', x='alcohol', y='quality');
+
+### Aula 2.13 ("winequality_edited.csv")
+# Encontre a qualidade média de cada tipo de vinho (tinto e branco) com groupby
+df_wine.groupby(["color"]).mean()["quality"]
+
+# Fatias de dados qualitativos com o Pandas
+# Para que serve: dar uma descrição qualitativa de alguns tipos de dados
+# É mais fácil avaliar dados classificados como: ["Ótimo", "Bom", "Razoável", "Ruim" e "Péssimo"] do que um dado com saída numérica tipo: 30,1
+
+# 1-use quartis para criar cinco classes: (obs: este não é o critério ideal, uma vez que min e max conterão um único valor)
+# o comando .describe() já faz isso para nós
+# observe os seguintes valores de pH com Pandas describe: min, 25%, 50%, 75% e max
+ph_desc = df_wine["pH"].describe()
+
+# 2-colete os valores para cada uma das classes
+# eu salvei o dicionário gerado pelo "describe" e agora extraio os parâmetros dele
+# bordas dos intervalos que serão usados para dividir os dados em grupos
+bin_edges = [ph_desc['min'] ,ph_desc["25%"] , ph_desc["50%"] ,ph_desc["75%"], ph_desc["max"]] # Preencha esta lista com os cinco valores que você acabou de encontrar
+
+# 3-crie seus próprios rótulos, mais compreensíveis
+# rótulos para os quadro grupos de nível de acidez
+bin_names = ["Alto" ,"Moderadamente Alto" ,"Médio" ,"Baixo" ] # Nomeie cada categoria de nível de acidez
+
+# 4-fatie os dados com valores, para a nova coluna "Acidity Levels"
+# o comando especial .cut() faz isso para nós 
+df_wine['acidity_levels'] = pd.cut(df_wine['pH'], bin_edges, labels=bin_names)
+df_wine.head()
+
+# O problema terminou. Mas um outro dado interessante é um relatório com as classes criadas e a média para cada uma delas:
+# 5-encontre a qualidade média de cada nível de acidez com "groupby"
+df_wine.groupby(["acidity_levels"]).mean()["quality"]
+
+# Salve as alterações (não salvo o índice, uma vez que não tenho cabeçalho para ele)
+df_wine.to_csv('winequality_edited.csv', index=False)
+
+### Aula 2.14 - Query no Pandas
+# selecionando registros malignos em dados de câncer
+df_m = df[df['diagnosis'] == 'M']
+df_m = df.query('diagnosis == "M"')
+
+# selecionando registros de pessoas que ganham mais de $50K
+df_a = df[df['income'] == ' >50K']
+df_a = df.query('income == " >50K"')
+
+### Aula 2.15 ("winequality_edited.csv")
+# para alcoólicos, obtenha o valor mediano de álcool
+alcohol_median = df_wine["alcohol"].median()
+
+# selecione amostras com teor alcóolico abaixo da mediana
+low_alcohol = df_wine.query('alcohol < @alcohol_median') # esse @ faz o papel de "..." + str(alcohol_median)
+# selecione amostras com teor alcóolico maior ou igual à mediana
+high_alcohol = df_wine.query('alcohol >= @alcohol_median')
+# certifique-se que estas consultas incluíram cada amostra uma única vez
+num_samples = df_wine.shape[0]
+num_samples == low_alcohol['quality'].count() + high_alcohol['quality'].count() # resultado deve ser True
+
+# obtenha a avaliação média de qualidade para grupos com alto e baixo teor alcóolico
+print(" Avaliação média para alto teor:{0} \n Avaliação média para baixo teor:{1}".format(
+        high_alcohol["quality"].mean(), low_alcohol["quality"].mean() ))
+
+# para doces, obtenha o valor mediano do nível de açúcar residual
+sugar_median = df_wine["residual_sugar"].median()
+
+# selecione amostras com nível de açúcar residual abaixo da mediana
+low_sugar = df_wine.query('residual_sugar < @sugar_median')
+# selecione amostras com nível de açúcar residual maior ou igual à mediana
+high_sugar = df_wine.query('residual_sugar >= @sugar_median')
+# certifique-se que estas consultas incluíram cada amostra uma única vez
+num_samples == low_sugar['quality'].count() + high_sugar['quality'].count() # resultado deve ser True
+
+# obtenha a avaliação média de qualidade para grupos com alto e baixo nível de açúcar residual
+print(" Avaliação média para alto nível:{0} \n Avaliação média para baixo nível:{1}".format(
+        high_sugar["quality"].mean(), low_sugar["quality"].mean() ))
+		
+### Aula 2.16 Função Bar do Matplotlib
+import matplotlib.pyplot as plt
+% matplotlib inline
+# Dois argumentos são necessários para se usar a função bar do pyplot: 
+# -coordenada no eixo x das barras
+# -altura
+plt.bar([1, 2, 3], [224, 620, 425]);
+
+# Rótulos das marcações do eixo x usando a função xticks do pyplot, ou um parâmetro adicional na função bar
+# trace as barras
+plt.bar([1, 2, 3], [224, 620, 425])
+# especifique as coordenadas no eixo x das marcações e seus rótulos
+plt.xticks([1, 2, 3], ['a', 'b', 'c']);
+
+# trace as barras com rótulos nas marcações do eixo x
+plt.bar([1, 2, 3], [224, 620, 425], tick_label=['a', 'b', 'c']);
+
+#Defina o título e o rótulo dos eixos
+plt.bar([1, 2, 3], [224, 620, 425], tick_label=['a', 'b', 'c'])
+plt.title('Some Title')
+plt.xlabel('Some X Label')
+plt.ylabel('Some Y Label');
+
+### Aula 2.19 Matplotlib ("winequality_edited.csv")
+# Use query para selecionar cada grupo e obter sua qualidade média
+median = df_wine['alcohol'].median()
+low = df_wine.query('alcohol < {}'.format(median))
+high = df_wine.query('alcohol >= {}'.format(median))
+
+mean_quality_low = low['quality'].mean()
+mean_quality_high = high['quality'].mean()
+
+# Crie um gráfico de barras com rótulos adequados
+locations = [1, 2]
+heights = [mean_quality_low, mean_quality_high]
+labels = ['Low', 'High']
+plt.bar(locations, heights, tick_label=labels)
+plt.title('Médias de qualidade por gradação alcoólica')
+plt.xlabel('Gradação alcoólica')
+plt.ylabel('Avaliação média');
+
+# Crie um gráfico de barras com uma barra para amostras de vinho com baixo nível de açúcar residual e outra para amostras com alto nível de açúcar residual.
+# Use query para selecionar cada grupo e obter sua qualidade média
+median_sugar = df_wine['residual_sugar'].median()
+low_sugar = df_wine.query('residual_sugar < {}'.format(median_sugar))
+high_sugar = df_wine.query('residual_sugar >= {}'.format(median_sugar))
+
+mean_quality_low_sugar = low['quality'].mean()
+mean_quality_high_sugar = high['quality'].mean()
+
+# Crie um gráfico de barras com rótulos adequados
+locations = [1, 2]
+heights = [mean_quality_low_sugar, mean_quality_high_sugar]
+labels = ['Low', 'High']
+plt.bar(locations, heights, tick_label=labels)
+plt.title('Avaliação Média pelo Nível de Açúcar')
+plt.xlabel('Nível de Açúcar')
+plt.ylabel('Avaliação Média');
+
+# Crie um gráfico de barras com uma barra para cada um dos quatro níveis de acidez.
+# Use groupby para obter a qualidade média para cada nível de acidez
+# Crie um gráfico de barras com rótulos adequados
+df_wine.groupby(["acidity_levels"]).mean()["quality"].plot(kind="bar", ylim=(5.5,6), title="Qualidade Média por Níveis de Acidez")
+
+# Gráfico de linhas
+df_wine.groupby(["acidity_levels"]).mean()["quality"].plot(kind="line", ylim=(5.5,6), title="Qualidade Média por Níveis de Acidez")
+
+# legenda
+plt.legend()
+
+### Aula 3_20 Gráfico mais sofisticado
+#1-Acione Matplotlib e Seaborn
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+% matplotlib inline
+import seaborn as sns
+sns.set_style('darkgrid')
+wine_df = pd.read_csv('winequality_edited.csv')
+
+#2-Crie vetores para as alturas das barras correspondentes aos vinhos tinto e branco
+# Lembre-se, existe uma barra para cada combinação de tipo de vinho e avaliação de qualidade.
+# A altura de cada barra é baseada na proporção de amostrar daquele tipo com aquela avaliação de qualidade.
+# Proporções das barras de vinho tinto = contagens para cada avaliação de qualidade / número total de amostras de vinho tinto
+# Proporções das barras de vinho branco = contagens para cada avaliação de qualidade / número total de amostras de vinho branco
+# obtenha as contagens para cada avaliação e tipo de vinho
+color_counts = wine_df.groupby(['color', 'quality']).count()['pH']
+color_counts
+# obtenha a contagem total para cada tipo de vinho
+color_totals = wine_df.groupby('color').count()['pH']
+color_totals
+# obtenha proporções dividindo as contagens das avaliações dos vinhos tintos pelo número total de amostras de vinho tinto
+red_proportions = color_counts['red'] / color_totals['red']
+red_proportions
+# obtenha proporções dividindo as contagens das avaliações dos vinhos brancos pelo número total de amostras de vinho branco
+white_proportions = color_counts['white'] / color_totals['white']
+white_proportions
+
+#3-Complete dados faltantes
+# Está faltando um valor de vinho tinto para a avaliação 9.
+# Embora esteja número seja 0, precisamos dele para nosso gráfico
+red_proportions['9'] = 0
+red_proportions
+
+#4-Trace as proporções em um gráfico de barras
+# Defina a localização no eixo x para cada grupo de avaliação e a largura de cada barra
+ind = np.arange(len(red_proportions))  # a localização no eixo x dos grupos
+width = 0.35       # a largura das barras
+# trace as barras
+red_bars = plt.bar(ind, red_proportions, width, color='r', alpha=.7, label='Red Wine')
+white_bars = plt.bar(ind + width, white_proportions, width, color='w', alpha=.7, label='White Wine')
+# título e rótulos
+plt.ylabel('Proportion')
+plt.xlabel('Quality')
+plt.title('Proportion by Wine Color and Quality')
+locations = ind + width / 2  # localização dos marcadores no eixo x
+labels = ['3', '4', '5', '6', '7', '8', '9']  # rótulos dos marcadores no eixo x
+plt.xticks(locations, labels)
+
+### Aula 4.5
+# Avaliando dados
+#1-número de amostras em cada conjunto
+#2-número de colunas em cada conjunto
+#3-linhas duplicadas em cada conjunto
+#4-tipos de dados das colunas
+#5-atributos com valor ausente
+#6-número de valores únicos não nulos para atributos em cada conjunto
+#7-o que esses valores únicos são e quanto valem cada
+
+import pandas as pd
+arq1 = pd.read_csv('all_alpha_08.csv')
+arq2 = pd.read_csv('all_alpha_18.csv')
+arq1.head
+arq2.head
+#número de amostras em cada conjunto
+#número de colunas em cada conjunto
+print(arq1.shape)
+print(arq2.shape)
+#linhas duplicadas em cada conjunto
+print(arq1.duplicated().sum())
+print(arq2.duplicated().sum())
+#tipos de dados das colunas
+print(arq1.dtypes)
+print(arq2.dtypes)
+#atributos com valor ausente
+print(arq1.info())
+print(arq2.info())
+#o que esses valores únicos são e quanto valem cada
+print(arq1.nunique())
+print(arq2.nunique())
+#número de valores únicos não nulos para atributos em cada conjunto
+#df_wine.groupby(["color"]).mean()["quality"]
+#print(arq1.groupby("model"))
+print("Model :", arq2['Model'].unique())
+print("Displ :", arq2['Displ'].unique())
+print("Cyl :", arq2['Cyl'].unique())
+print("Trans :", arq2['Trans'].unique())
+print("Drive :", arq2['Drive'].unique())
+print("Fuel :", arq2['Fuel'].unique())
+print("Cert Region :", arq2['Cert Region'].unique())
+print("Stnd :", arq2['Stnd'].unique())
+print("Stnd Description :", arq2['Stnd Description'].unique())
+print("Underhood ID :", arq2['Underhood ID'].unique())
+print("Veh Class :", arq2['Veh Class'].unique())
+print("Air Pollution Score :", arq2['Air Pollution Score'].unique())
+print("City MPG :", arq2['City MPG'].unique())
+#(...)
+
+### Aula 4.6 Limpando Rótulos das Colunas (campos inúteis)
+# carregue os conjuntos de dados
+import pandas as pd
+df_08 = pd.read_csv('all_alpha_08.csv')
+df_18 = pd.read_csv('all_alpha_18.csv')
+# exiba o conjunto de dados de 2018
+df_18.head(1)
+# descarte colunas do conjunto de dados de 2008
+df_08.drop(['Stnd', 'Underhood ID', 'FE Calc Appr', 'Unadj Cmb MPG'], axis=1, inplace=True)
+# confirme as mudanças
+df_08.head(1)
+# descarte colunas do conjunto de dados de 2018
+df_18.drop(['Stnd', 'Stnd Description', 'Underhood ID', 'Comb CO2'], axis=1, inplace=True)
+# confirme as mudanças
+df_18.head(1)
+# renomeie Sales Area para Cert Region
+df_08.rename(index=str, columns={"Sales Area": "Cert Region"}, inplace = True)
+# confirme as mudanças
+df_08.head(1)# substitua espaços por rótulos com subtrações e letras minúsculas para o conjunto de dados de 2008
+#df_08.rename(columns=lambda x: x.strip().lower().replace(" ", "_"), inplace=True)
+# substitua espaços por rótulos com subtrações e letras minúsculas para o conjunto de dados de 2008
+df_08.rename(columns=lambda x: x.strip().lower().replace(" ", "_"), inplace=True)
+# confirme as mudanças
+df_08.head(1)
+# substitua espaços por rótulos com subtrações e letras minúsculas para o conjunto de dados de 2018
+df_18.rename(columns=lambda x: x.strip().lower().replace(" ", "_"), inplace=True)
+# confirme as mudanças
+df_18.head(1)
+# verifique se os rótulos das colunas dos conjuntos de dados de 2008 e 2018 são idênticos
+df_08.columns == df_18.columns
+# certifique-se que eles são todos idênticos assim
+(df_08.columns == df_18.columns).all()
+# salve os novos conjuntos de dados para a próxima seção
+df_08.to_csv('data_08.csv', index=False)
+df_18.to_csv('data_18.csv', index=False)
+
+### Aula 4.7 Filtrar, remover nulos e remover duplicados
+# carregue conjuntos de dados
+import pandas as pd
+df_08 = pd.read_csv('data_08.csv')
+df_18 = pd.read_csv('data_18.csv')
+# exiba as dimensões do conjunto de dados
+df_08.shape
+df_08.head()
+# exiba as dimensões do conjunto de dados
+df_18.shape
+
+#1-Filtrar
+# filtre conjuntos de dados por linhas segundo os padrões da Califórnia
+# df_m = df.query('diagnosis == "M"')
+df_08 = df_08.query('cert_region == "CA"')
+df_18 = df_18.query('cert_region == "CA"')
+# confirme que a única região de certificação é a Califórnia
+df_08['cert_region'].unique()
+# confirme que a única região de certificação é a Califórnia
+df_18['cert_region'].unique()
+# descarte CA de certificação de região de ambos conjuntos de dados
+df_08.drop(['cert_region'], axis=1, inplace=True)
+df_18.drop(['cert_region'], axis=1, inplace=True)
+df_08.shape
+df_18.shape
+
+2-Remover linhas faltantes com valores Nulos
+# exiba a contagem de valores faltantes para cada característica em 2008
+df_08.info()
+# exiba a contagem de valores faltantes para cada característica em 2018
+df_18.info()
+# descarte linhas com quaisquer valores nulos em ambos conjuntos de dados
+df_08.dropna(subset = ['cyl', 'trans', 'drive', 'city_mpg', 'hwy_mpg', 'cmb_mpg', 'greenhouse_gas_score'], inplace = True)
+df_18.dropna(subset = ['cyl', 'displ'], inplace = True)
+# verifique se quaisquer colunas em 2018 têm valores nulos - o resultado deve ser False
+df_08.isnull().sum().any()
+# verifique se quaisquer colunas em 2018 têm valores nulos - o resultado deve ser False
+df_18.isnull().sum().any()
+
+3-Remover Duplicados
+# exiba o número de duplicatas nos conjuntos de dados de 2008 e 2018
+print(len(df_08.duplicated()))
+print(len(df_18.duplicated()))
+# descarte duplicatas em ambos conjuntos de dados
+df_08.drop_duplicates(inplace=True)
+df_18.drop_duplicates(inplace=True)
+# exiba o número de duplicatas novamente para confirmar desduplicação - ambos devem ser 0
+print(len(df_08.duplicated()))
+print(len(df_18.duplicated()))
+# salve seu progresso para a próxima seção
+df_08.to_csv('data_08.csv', index=False)
+df_18.to_csv('data_18.csv', index=False)
+
+### Aula 4.8
+#Quais das mudanças a seguir podem ser feitas à coluna “cyl.” nos dois conjuntos de dados de forma clara e consistente?
+#Quais das mudanças a seguir podem ser feitas à coluna “air_pollution_score” nos dois conjuntos de dados de forma clara e consistente?
+#Quais dos atributos a seguir precisam ser transformados de strings em floats?
+#Quais mudanças precisam ser feitas para deixar a coluna “greenhouse_gas_score” consistente nos dois conjuntos de dados?
+# carregue conjuntos de dados
+import pandas as pd
+df_08 = pd.read_csv('data_08.csv')
+df_18 = pd.read_csv('data_18.csv')
+# exiba as dimensões do conjunto de dados
+print(df_08.shape)
+print(df_08.head(5))
+print(df_08.dtypes)
+print("2008 - cyl :",type(df_08['cyl'][0])," air pol score :",type(df_08['air_pollution_score'][0])," green gas score :", type(df_08['greenhouse_gas_score'][0]))
+# exiba as dimensões do conjunto de dados
+print(df_18.shape)
+print(df_18.head(5))
+print("2018 - cyl :",type(df_18['cyl'][0])," air pol score :",type(df_18['air_pollution_score'][0])," green gas score :", type(df_18['greenhouse_gas_score'][0]))
+
+### Aula 4.9
+#Ajustando tipo de dados “cyl.”
+#2008: extrair int da string.
+#2018: transformar float em int.
+import pandas as pd
+df_08 = pd.read_csv('data_08.csv')
+df_18 = pd.read_csv('data_18.csv')
+# verifique a contagem de valores para a coluna cyl de 2008
+df_08['cyl'].value_counts()
+# Extraia int de strings da coluna cyl de 2008
+a = df_08['cyl']
+b = a.str.extract('(\d+)').astype(int)
+df_08['cyl'] = b
+# tentar métodos apply e map do Pandas:
+# https://chrisalbon.com/python/data_wrangling/pandas_apply_operations_to_dataframes/
+# Verifique a contagem de valores para a coluna cyl de 2008 novamente para confirmar a mudança
+df_08['cyl'].value_counts()
+# converta a coluna cyl de 2018 para int
+df_18.cyl = df_18.cyl.astype(int)
+df_18['cyl'].value_counts()
+df_08.to_csv('data_08.csv', index=False)
+df_18.to_csv('data_18.csv', index=False)
+
+#Ajustar tipo de dados “air_pollution_score”
+import pandas as pd 
+df_08 = pd.read_csv('data_08.csv')
+df_18 = pd.read_csv('data_18.csv')
+#2008: transformar string em float.
+# tente usar as funções to_numeric ou astype do Pandas para converter a coluna
+# air_pollution_score do conjunto de dados de 2008 para float -- isso não vai funcionar
+# Parece que isso não vai ser tão simples quanto converter o tipo de dados.
+# Segundo o erro abaixo, o valor na linha 582 seria "6/4" - vamos dar uma olhada.
+df_08.iloc[582]
+# Primeiro, vamos obter todos os híbridos de 2008
+hb_08 = df_08[df_08['fuel'].str.contains('/')]
+hb_08
+# híbridos em 2018
+hb_18 = df_18[df_18['fuel'].str.contains('/')]
+hb_18
+# crie duas cópias do dataframe com híbridos de 2008
+df1 = hb_08.copy()  # data on first fuel type of each hybrid vehicle
+df2 = hb_08.copy()  # data on second fuel type of each hybrid vehicle
+# Cada um deve se parecer com isto
+df1
+# colunas que devem ser divididas por "/"
+split_columns = ['fuel', 'air_pollution_score', 'city_mpg', 'hwy_mpg', 'cmb_mpg', 'greenhouse_gas_score']
+# aplique a função split para cada coluna de cada cópia do dataframe
+for c in split_columns:
+    df1[c] = df1[c].apply(lambda x: x.split("/")[0])
+    df2[c] = df2[c].apply(lambda x: x.split("/")[1])
+# este dataframe armazena informações sobre o PRIMEIRO tipo de combustível do híbrido
+# i.e. os valores antes das "/"s
+df1
+# este dataframe armazena informações sobre o SEGUNDO tipo de combustível do híbrido
+# i.e. os valores depois das "/"s
+df2
+# combine dataframes para adicionar ao dataframe original
+new_rows = df1.append(df2)
+# agora temos linhas separadas para cada tipo de combustível de cada veículo!
+new_rows
+# descarte as linhas originais que continham híbridos
+df_08.drop(hb_08.index, inplace=True)
+# adicione as novas linhas separadas
+df_08 = df_08.append(new_rows, ignore_index=True)
+# verifique se todas linhas originais com híbridos, que continham "/"s, sumiram
+df_08[df_08['fuel'].str.contains('/')]
+
+#2018: transformar int em float.
+# crie duas cópias do dataframe com híbridos de 2018, hb_18
+df1 = hb_18.copy()  # data on first fuel type of each hybrid vehicle
+df2 = hb_18.copy()  # data on second fuel type of each hybrid vehicle
+
+# colunas que devem ser divididas por "/"
+split_columns = ['fuel', 'city_mpg', 'hwy_mpg', 'cmb_mpg'] 
+#não precisa dividir as colunas air_pollution_score ou greenhouse_gas_score aqui
+#porque estas colunas já são ints no conjunto de dados de 2018
+# aplique a função split para cada coluna de cada cópia do dataframe
+for c in split_columns:
+    df1[c] = df1[c].apply(lambda x: x.split("/")[0])
+    df2[c] = df2[c].apply(lambda x: x.split("/")[1])
+# combine os dois dataframes
+new_rows = df1.append(df2)
+# descarte cada linha original que continha híbridos no dataframe original de 2018
+# faça isso usando a função drop do Pandas com o índice do hb_18
+df_18.drop(hb_18.index, inplace=True)
+# anexe new_rows a df_18
+df_18 = df_18.append(new_rows, ignore_index=True)
+# verifique se elas sumiram
+df_18[df_18['fuel'].str.contains('/')]
+df_18.shape
+
+#2008 e 2018: transformar str/int em float.
+# converta a coluna de poluição do ar de 2008 de string para float
+df_08.air_pollution_score = df_08.air_pollution_score.astype(float)
+df_08.dtypes
+# converta a coluna de poluição do ar de 2018 de int to float
+df_18.air_pollution_score = df_18.air_pollution_score.astype(float)
+df_18.dtypes
+df_08.to_csv('data_08.csv', index=False)
+df_18.to_csv('data_18.csv', index=False)
+
+### Aula 4.11
+#Ajustar tipos de dados “city_mpg”, “hwy_mpg” e “cmb_mpg” int para float.
+import pandas as pd
+df_08 = pd.read_csv('data_08.csv')
+df_18 = pd.read_csv('data_18.csv')
+# converta colunas mpg para floats
+mpg_columns = ["city_mpg", "hwy_mpg", "cmb_mpg"]
+for c in mpg_columns:
+    df_18[c] = df_18[c].apply(lambda x: x * 1.)
+    df_08[c] = df_08[c].apply(lambda x: x * 1.)  
+
+### Aula 4.12
+# Analisar graficamente alguns dados
+import pandas as pd
+import numpy as np
+df_08 = pd.read_csv('data_08.csv')
+df_18 = pd.read_csv('data_18.csv')
+# histograma: gases de efeito estufa - greenhouse_gas_score
+df_08["greenhouse_gas_score"].plot(kind="hist", title="gases efeito estufa 2008");
+df_18["greenhouse_gas_score"].plot(kind="hist", title="gases efeito estufa 2018");
+# gráfico de dispersão: deslocamento (cilindrada) x mpg combinado
+# gráfico de dispersão: emissão de gases estufa x mpg combinado
+pd.plotting.scatter_matrix(df_08, figsize=(15,15));
+
+### Aula 4.13
+#P1: Mais modelos estão usando fontes alternativas de combustível? Se sim, quanto mais?
+#P2: Quanto as classes de veículo melhoraram na economia de combustível (aumento no mpg)?
+#P3: Quais são as características dos veículos SmartWay? Elas mudaram ao longo do tempo (mpg, classificação de gases)?
+#P4: Que atributos estão associados a uma melhor economia de combustível (mpg)?
+
+### Aula 4.15 https://pandas.pydata.org/pandas-docs/stable/merging.html#database-style-dataframe-joining-merging
+import pandas as pd
+df_08 = pd.read_csv('data_08.csv')
+df_18 = pd.read_csv('data_18.csv')
+# renomeando as colunas para 2008 - a colagem será lateral!
+df_08.rename(columns=lambda x: x[:10]+"_2008", inplace=True)
+df_08.head()
+# mescle os conjuntos de dados
+df_combined = df_08.merge(df_18, how='inner', left_on="model_2008", right_on="model")
+# exiba para verificar a mesclagem
+df_combined.head()
+# salve os dados
+df_combined.to_csv('combined_dataset.csv', index=False)
+# a ideia é a seguinte: inner join, você pega a intersecção dos conjuntos
+# como eles aparecem tanto em A como em B, você vê a evolução do modelo, colando as tabelas lateralmente e indexando pelo modelo do carro
+# eu poderia usar outer join (união de conjuntos), left ou right join (o dominante é A ou B e do oposto, apenas os que são iguais)
+# outro comando útil é o Union. Ele serve para colar verticalmente uma lista em outra. Sim, às vezes eu posso precisar disso!
+# e cross join. Este é o produto cartesiano entre dois conjuntos de dados. Muito útil quando eu tenho uma coluna em um, que são linhas no outro!
+# e por fim, exclusive outer join. Isso aqui me dá todos os do grupo A, mais todos os do grupo B, mas nenhum que pertença a A e B ao mesmo tempo
+
+### Anaconda e instaladores
+# Anaconda -> ambientes virtuais e gerenciamento de bibliotecas
+# (flexos-no Linux) ]conda + Anaconda Navigator + Anaconda Prompt + Spyder (no Windows)
+# >>>conda create -n tea python-3 numpy pandas matplotlib
+# >>>conda upgrade conda
+# >>>conda upgrade --all 
+# >>>conda install numpy pandas matplotlib >>>conda remove
+# >>>conda install jupyter notebook
+# ]jupyter notebook
+# source (no linux) ]activate tea ]deactivate tea
+# >>>conda list
+# >>>conda search 
+# ]pip ... freeze >requirements.txt
+# Editores de texto, como Atom e Spyder, ou Notepad++, com adicionais para programação em Python 

@@ -1,0 +1,120 @@
+2018-11-07 11:23:35,709:INFO:Subtract: 10 - 5 = 5
+2018-11-07 11:23:35,711:WARNING:Multiply: 10 * 5 = 50
+2018-11-07 11:23:35,711:CRITICAL:Divide: 10 / 5 = 2.0
+2018-11-07 11:24:54,721:INFO:Subtract: 10 - 5 = 5
+2018-11-07 11:24:54,722:WARNING:Multiply: 10 * 5 = 50
+2018-11-07 11:24:54,723:CRITICAL:Divide: 10 / 5 = 2.0
+2018-11-07 11:25:16,202:CRITICAL:Divide: 10 / 5 = 2.0
+2018-11-07 14:59:59,088:DEBUG:Add: 10 + 5 = 15
+2018-11-07 14:59:59,088:DEBUG:Add: 10 + 5 = 15
+2018-11-07 14:59:59,090:INFO:Subtract: 10 - 5 = 5
+2018-11-07 14:59:59,090:INFO:Subtract: 10 - 5 = 5
+2018-11-07 14:59:59,092:WARNING:Multiply: 10 * 5 = 50
+2018-11-07 14:59:59,092:WARNING:Multiply: 10 * 5 = 50
+2018-11-07 14:59:59,093:CRITICAL:Divide: 10 / 5 = 2.0
+2018-11-07 14:59:59,093:CRITICAL:Divide: 10 / 5 = 2.0
+2018-11-07 15:00:41,785:DEBUG:Add: 10 + 5 = 15
+2018-11-07 15:00:41,785:DEBUG:Add: 10 + 5 = 15
+2018-11-07 15:00:41,786:DEBUG:Subtract: 10 - 5 = 5
+2018-11-07 15:00:41,786:DEBUG:Subtract: 10 - 5 = 5
+2018-11-07 15:00:41,787:DEBUG:Multiply: 10 * 5 = 50
+2018-11-07 15:00:41,787:DEBUG:Multiply: 10 * 5 = 50
+2018-11-07 15:00:41,789:DEBUG:Divide: 10 / 5 = 2.0
+2018-11-07 15:00:41,789:DEBUG:Divide: 10 / 5 = 2.0
+2018-11-07 15:00:56,841:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:00:56,841:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:00:56,843:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:00:56,843:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:00:56,844:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:00:56,844:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:00:56,845:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-96-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:00:56,845:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-96-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:00:56,876:DEBUG:Divide: 10 / 0 = None
+2018-11-07 15:00:56,876:DEBUG:Divide: 10 / 0 = None
+2018-11-07 15:14:18,807:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:14:18,807:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:14:18,896:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:14:18,896:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:14:18,898:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:14:18,898:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:14:18,900:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-102-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:14:18,900:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-102-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:14:18,900:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-102-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:14:18,903:DEBUG:Divide: 10 / 0 = None
+2018-11-07 15:14:18,903:DEBUG:Divide: 10 / 0 = None
+2018-11-07 15:16:33,989:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:16:33,989:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:16:33,992:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:16:33,992:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:16:33,995:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:16:33,995:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:16:33,997:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-104-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:33,997:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-104-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:33,997:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-104-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:33,997:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-104-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:34,000:DEBUG:Divide: 10 / 0 = None
+2018-11-07 15:16:34,000:DEBUG:Divide: 10 / 0 = None
+2018-11-07 15:16:46,211:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:16:46,211:DEBUG:Add: 10 + 0 = 10
+2018-11-07 15:16:46,215:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:16:46,215:DEBUG:Subtract: 10 - 0 = 10
+2018-11-07 15:16:46,218:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:16:46,218:DEBUG:Multiply: 10 * 0 = 0
+2018-11-07 15:16:46,221:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-106-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:46,221:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-106-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:46,221:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-106-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:46,221:ERROR:Tried to divide by zero
+Traceback (most recent call last):
+  File "<ipython-input-106-92133da32ba6>", line 16, in divide
+    result = x / y
+ZeroDivisionError: division by zero
+2018-11-07 15:16:46,225:DEBUG:Divide: 10 / 0 = None
+2018-11-07 15:16:46,225:DEBUG:Divide: 10 / 0 = None

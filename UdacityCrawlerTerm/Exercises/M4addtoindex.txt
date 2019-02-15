@@ -1,0 +1,32 @@
+index = []
+
+def add_to_index(index,keyword,url):
+    if len(index) == 0: #index is empty
+        sstring = [] #inicializes search string
+        sstring.append(keyword)
+        ustring = []
+        ustring.append(url)
+        sstring.append(ustring)  
+        index.append(sstring)
+    else:
+        ind = 0
+        while ind < len(index):
+            sstring = index[ind]
+            if sstring[0] == keyword: #keyword: #keyword entry already exists
+                ustring = sstring.pop()
+                ustring.append(url)
+                sstring.append(ustring)
+                break
+            else:
+                sstring = [] #inicializes search string
+                sstring.append(keyword)
+                ustring = []
+                ustring.append(url)
+                sstring.append(ustring)
+                index.append(sstring)
+            ind = ind + 1
+
+add_to_index(index,'udacity','http://udacity.com')
+add_to_index(index,'computing','http://acm.org')
+add_to_index(index,'udacity','http://npr.org')
+print index #[['udacity', ['http://udacity.com', 'http://npr.org']], ['computing', ['http://acm.org']]]

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Introducing the Python defaultdict</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="author" content="Ludovico Fischer">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="Introducing%20the%20Python%20defaultdict_arquivos/style.css">
+  <!--[if lt IE 9]>
+  <script type="text/javascript" charset="utf-8" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div id="container">
+    <nav>
+      <a href="http://blog.ludovf.net/">Blog home</a>
+    </nav>
+    <article id="main" role="main">
+      <header>
+      <h1>Introducing the Python defaultdict</h1>
+      <p class="author"><a href="http://ludovf.net/">Ludovico Fischer</a></p>
+      <p class="date">23 Jun 2010</p>
+      </header>
+      <p>A defaultdict is a dictionary with a default value for keys, so
+ that keys for which no value has been explicitly defined can be 
+accessed without errors. Let’s see it in action.</p>
+
+<h2>Frequencies</h2>
+
+<p>Suppose you are given a list of words and you are asked to compute frequencies. You could do something like this:</p>
+
+<pre>frequencies = {}
+for word in wordlist:
+    frequencies[word] += 1</pre>
+
+
+<p>Unfortunately, Python throws a <code>KeyError</code> the first time 
+through, because you cannot increment the the values for the words, as 
+they have never been initialized. A workaround would be to catch the <code>KeyError</code> exception:</p>
+
+<pre>for word in wordlist:
+    try:
+        frequencies[word] += 1
+    except KeyError:
+        frequencies[word] = 1</pre>
+
+
+<p>Or you could use an if/else block:</p>
+
+<p>
+    for word in wordlist:<br>
+    &nbsp;&nbsp;&nbsp; if word in frequencies:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; frequencies[word] += 1<br>
+    &nbsp;&nbsp;&nbsp; else:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; frequencies[word] = 1<br>
+    &nbsp;</p>
+
+
+<h2>The defaultdict solution</h2>
+
+<p>In Python 2.5 and later, though, the&nbsp; <code>collections.defaultdict</code> class comes to the rescue! A <code>defaultdict</code> is just like a regular Python <code>dict</code>,
+ except that it supports an additional argument at initialization: a 
+function. If someone attempts to access a key to which no value has been
+ assigned, that function will be called (without arguments) and its 
+return value is used as the default value for the key. Clever, right?</p>
+
+<p>Going back to our example, we want the default value to be 0, so we pass the built-in function <code>int()</code>to the <code>defaultdict</code> constructor. When called without arguments, the <code>int()</code> function simply returns 0.</p>
+
+<pre>from collections import defaultdict
+frequencies = defaultdict(int)
+for word in wordlist:
+    frequencies[word] += 1</pre>
+
+
+    </article>
+    <footer>
+      Copyright 2012 <a href="http://ludovf.net/" rel="author">Ludovico Fischer</a>
+    </footer>
+  </div> 
+
+
+
+
+</body></html>

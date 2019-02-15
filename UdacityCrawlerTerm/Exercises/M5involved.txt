@@ -1,0 +1,100 @@
+#Dictionaries of Dictionaries (of Dictionaries)
+
+#The next several questions concern the data structure below for keeping 
+#track of Udacity's courses (where all of the values are strings):
+  
+#    { <hexamester>, { <class>: { <property>: <value>, ... },
+#                                     ... },
+#      ... }
+
+#For example,
+
+courses = {
+    'feb2012': { 'cs101': {'name': 'Building a Search Engine',
+                           'teacher': 'Dave',
+                           'assistant': 'Peter C.'},
+                 'cs373': {'name': 'Programming a Robotic Car',
+                           'teacher': 'Sebastian',
+                           'assistant': 'Andy'}},
+    'apr2012': { 'cs101': {'name': 'Building a Search Engine',
+                           'teacher': 'Dave',
+                           'assistant': 'Sarah'},
+                 'cs212': {'name': 'The Design of Computer Programs',
+                           'teacher': 'Peter N.',
+                           'assistant': 'Andy',
+                           'prereq': 'cs101'},
+                 'cs253': {'name': 'Web Application Engineering - Building a Blog',
+                           'teacher': 'Steve',
+                           'prereq': 'cs101'},
+                 'cs262': {'name': 'Programming Languages - Building a Web Browser',
+                           'teacher': 'Wes',
+                           'assistant': 'Peter C.',
+                           'prereq': 'cs101'},
+                 'cs373': {'name': 'Programming a Robotic Car',
+                           'teacher': 'Sebastian'},
+                 'cs387': {'name': 'Applied Cryptography',
+                           'teacher': 'Dave'}},
+    'jan2044': { 'cs001': {'name': 'Building a Quantum Holodeck',
+                           'teacher': 'Dorina'},
+                        'cs003': {'name': 'Programming a Robotic Robotics Teacher',
+                           'teacher': 'Jasper'},
+                     }
+    }
+
+#[Double Gold Star] Define a procedure, involved(courses, person), that takes as
+#input a courses structure and a person and returns a Dictionary that describes
+#all the courses the person is involved in.  A person is involved in a course if
+#they are a value for any property for the course.  The output Dictionary should
+#have hexamesters as its keys, and each value should be a list of courses that
+#are offered that hexamester (the courses in the list can be in any order).
+
+#For example,
+def involved(courses, person):
+    res = {}
+    hexamester = []
+    course = []
+    z = []
+    for a in courses:
+        hexamester.append(a)
+    for b in hexamester:
+        alfa = courses[b]
+        for c in alfa:
+            k = 0
+            notinsert = False
+            while k < len(course):
+                #print course[k]
+                #print c
+                if course[k] == c:
+                    notinsert = True
+                    break
+                k = k + 1
+            if notinsert == False:
+                course.append(c)
+    #print 'course=',course
+    for d in hexamester:
+        for e in course:
+            compa = e in courses[d]
+            if compa == True:
+                #print courses[d][e]
+                for gama in courses[d][e]:
+                    compb = person in courses[d][e][gama]
+                    if compb == True:
+                        insera = d in res
+                        if insera == True:
+                            beta = []
+                            beta.append(res[d])
+                            beta.append(e)
+                            res[d] = beta
+                        else:
+                            beta = []
+                            beta.append(e)
+                            res[d] = beta 
+    return res
+
+#print courses['feb2012']['cs101']['teacher']
+#alfa = courses['feb2012']
+#for course in alfa:
+#    print course
+print involved(courses, 'Dave')# => {'apr2012': ['cs101', 'cs387'], 'feb2012': ['cs101']}
+print involved(courses, 'Peter C.') #=> {'apr2012': ['cs262'], 'feb2012': ['cs101']}
+print involved(courses, 'Dorina') #=> {'jan2044': ['cs001']}

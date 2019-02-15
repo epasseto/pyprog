@@ -1,0 +1,1994 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{RdaUSACE}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{nouxe7uxf5es-buxe1sicas-de-r}{%
+\subsubsection{Noções básicas de R}\label{nouxe7uxf5es-buxe1sicas-de-r}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{ide-r}{%
+\paragraph{IDE R}\label{ide-r}}
+
+\hypertarget{outras-maneiras-de-usar}{%
+\paragraph{Outras maneiras de usar}\label{outras-maneiras-de-usar}}
+
+\hypertarget{jupyter-notebook}{%
+\subsubsection{Jupyter Notebook}\label{jupyter-notebook}}
+
+\emph{O R ao final da primeira palavra é de R!}
+
+Rodar uma linha:
+
+\begin{verbatim}
+CTRL+ENTER
+\end{verbatim}
+
+\emph{Como aqui estamos dentro do Jupyter Notebook, basta apertar o
+botão Run na barra de ferramentas. Mas o CRTL+ENTER também funciona!}
+
+Comentar várias:
+
+\begin{verbatim}
+CTRL+C #
+\end{verbatim}
+
+Comece criando um novo ambiente, colocando pastas para data, scripts e
+output
+
+\emph{As janelinhas com In {[} {]} representam uma máquina virtual em
+cada uma. Como a linguagem padrão setada para este Jupyter Notebook foi
+R, elas rodam o interpretador R}
+
+É possível mudar algumas delas para outras linguagens, como Python ou
+Java. Para algumas linguagens, como FORTRAN, é necessário:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  abrir a janela de comandos do Windows clicando com o botão
+  \textbf{direito} e indicando \textbf{Executar como Administrador} (é
+  preciso ter privilégios de administrador);
+\item
+  fazer a instalação com o comando
+
+  conda install \ldots{}
+\end{enumerate}
+
+Ou
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  abrir o programa \textbf{Anaconda Navigator} e procurar por nome, pelo
+  pacote da nova linguagem que deseja habilitar. A instalação já cuida
+  de todas as dependências
+\end{enumerate}
+
+    Invocando o help:
+
+\emph{Isso é meio universal. Serve para funções, classes, objetos,
+pacotes\ldots{}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{o}{?}\PY{k+kp}{abs}
+         
+         a \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{3}
+         
+         \PY{k+kp}{print}\PY{p}{(}a\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] 3
+
+    \end{Verbatim}
+
+    \hypertarget{instalando-e-usando-pacotes}{%
+\paragraph{Instalando e usando
+pacotes}\label{instalando-e-usando-pacotes}}
+
+Um pacote é uma biblioteca de classes que adicionam funcionalidades ao
+R. Eles não vêm instalados ``de fábrica'' para não deixar o R pesado
+demais, com coisas que talvez você não vá usar nunca. É importante antes
+de chamar o pacote (com o comando \textbf{library}) realizar sua
+instalação
+
+\emph{Se você fica confuso com os comandos abaixo, ou achar que precisa
+aprender mais, existem dois lugares bons para googlar antes de se
+apavorar}
+
+Eles são:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Datacamp - a Datacamp é uma plataforma americana e que visa lucro. Ela
+  funciona mais ou menos como a Udemy. As pessoas criam seus cursos lá e
+  outras podem comprar. Uma prática para atrair clientes é
+  disponibilizar gratuitamente milhares de tutoriais em TI, muitos deles
+  sobre R. Então é possível aprender muito sem gastar um tostão. Se você
+  se interessar, poderá contratar mais tarde outros tutoriais mais
+  avançados a preços módicos. Para quem está iniciando, todos são
+  gratuitos!
+\end{enumerate}
+
+Se achar confuso ou incompleto o que está escrito abaixo, experimente o
+seguinte
+\href{https://www.datacamp.com/community/tutorials/r-packages-guide}{tutorial}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Stackoverflow - é o maior repositório de boas respostas para
+  questionamentos em todas as linguagens de programação. Existe uma
+  versão mais limitada em português. Ao googlar, se encontrar um
+  direcionamento para a Stack, provavelmente terá a resposta para a sua
+  questão de uma maneira direta
+\end{enumerate}
+
+Por exemplo, esse cara teve um problema instalando o RCurl. Foi
+solicitado que se passasse o caminho explicitamente. A pergunta e a
+solução encontram-se
+\href{https://stackoverflow.com/questions/42459423/cannot-install-r-packages-in-jupyter-notebook}{aqui}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Instalando um pacote:
+
+\emph{Observe bem a mensagem apontada após executar o comando. Ela pode
+informar diversas coisas interessantes!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{readxl\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message:
+"package 'readxl' is in use and will not be installed"
+    \end{Verbatim}
+
+    Rodar um pacote:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k+kn}{library}\PY{p}{(}readxl\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{k+kp}{try}\PY{p}{(}readx1\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{RCurl\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+also installing the dependency 'bitops'
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+package 'bitops' successfully unpacked and MD5 sums checked
+package 'RCurl' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\textbackslash{}Users\textbackslash{}epasseto\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Temp\textbackslash{}Rtmpo75EWs\textbackslash{}downloaded\_packages
+
+    \end{Verbatim}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Comparação:
+
+\begin{verbatim}
+==
+\end{verbatim}
+
+\emph{observe que o resultado de uma comparação será sempre TRUE ou
+FALSE}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{l+m}{3} \PY{o}{==} \PY{l+m}{3}
+\end{Verbatim}
+
+
+    TRUE
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} A \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{3}
+         B \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{4}
+         
+         A \PY{o}{==} B
+\end{Verbatim}
+
+
+    FALSE
+
+    
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Criar uma variável:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} a \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{3}
+         a
+\end{Verbatim}
+
+
+    3
+
+    
+    \emph{Observe que para imprimir o conteúdo de um objeto, se este for o
+último comando de uma célula, não é necessário invocar explicitamente o
+comando \textbf{print}. O Jupyter Notebook acredita que após rodar um
+pedaço de código, seu último comando seria para exibir algo na tela. Mas
+isso também pode ser feito explicitamente:}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{k+kp}{print}\PY{p}{(}a\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] 3
+
+    \end{Verbatim}
+
+    Tipo de dado:
+
+\emph{Isso é útil para eu perguntar qual o tipo de dado que está gravado
+em uma determinada variável. No caso de datasets, eu posso perguntar o
+tipo de dado gravado em uma coluna!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{k+kp}{class}\PY{p}{(}a\PY{p}{)}
+\end{Verbatim}
+
+
+    'numeric'
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k+kp}{class}\PY{p}{(}\PY{l+m}{6.78}\PY{p}{)}
+\end{Verbatim}
+
+
+    'numeric'
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} teste \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{Olá Mundo\PYZdq{}}
+         \PY{k+kp}{class}\PY{p}{(}teste\PY{p}{)}
+\end{Verbatim}
+
+
+    'character'
+
+    
+    Data:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} minhadata \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.Date}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{2018\PYZhy{}09\PYZhy{}04\PYZdq{}}\PY{p}{)}
+         minhadata
+\end{Verbatim}
+
+
+    2018-09-04
+
+    
+    Data, mais detalhado:
+
+\emph{Isso aqui é um antigo padrão do UNIX e que acabou se tornando
+universalizado. Então se quiser formatar um campo data-hora sem ter dor
+de cabeça posteriormente, é bom ver um tutorial ou uma tabela com os
+vários padrões \textbf{POSIXct} e usar isso!}
+
+Uma documentação trazendo todos os formatos possíveis no
+\textbf{POSIXct} encontra-se
+\href{https://www.stat.berkeley.edu/~s133/dates.html}{aqui}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{k+kp}{as.POSIXct}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{2018\PYZhy{}09\PYZhy{}04 08:00:00\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    \begin{verbatim}
+[1] "2018-09-04 08:00:00 -03"
+    \end{verbatim}
+
+    
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Ler csv:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} brazil\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}} read.csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.csv\PYZdq{}}\PY{p}{)}
+        \PY{k+kt}{data.frame}
+        View\PY{p}{(}brazil\PYZus{}df\PY{p}{)} \PY{c+c1}{\PYZsh{}mostra tabela}
+\end{Verbatim}
+
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Criar um dicionário:
+
+\emph{Dicionários são extremamente úteis para se guardar coisas de uma
+maneira organizada. Eu posso por exemplo, definir uma das colunas do meu
+dataset como sendo um dicionário. Lá eu guardo todo um repositório de
+informações sobre cada ítem que eu tenho cadastrado. Por exemplo, em
+entradas de cadastro de livros, eu posso ter um dicionário com termos
+úteis encontrados em cada livro}
+
+Um dicionário tem uma chave e um conteúdo. É algo assim
+
+\begin{itemize}
+\tightlist
+\item
+  aspirina: medicamento contra indicado para o caso de dengue
+\end{itemize}
+
+Minha chave é aspirina e ao invocar esta palavra, eu obterei
+``medicamento contra indicado para o caso de dengue''
+
+Isso pode parecer banal, mas em \textbf{cálculos complexos} eu posso
+ganhar muito e muito tempo computacional com o truque do dicionário.
+Então eu tenho uma série de polinômios e para o valor de X = 2.31, eu
+acabei de calcular qual o valor de X\^{}3. O que eu faço é guardar este
+resultado num dicionário. Daí no próximo passo, eu pergunto se meu
+dicionário possui a entrada ``2.31''\ldots{} oh, já possui? Então eu
+simplesmente copio o valor para dentro da minha equação, sem ter que
+recalcular. Ah, não possui? Então daí eu calculo e acumulo na minha
+``colinha'' o resultado\ldots{}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} foo \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{vector}\PY{p}{(}mode\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{list\PYZdq{}}\PY{p}{,} length\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+         \PY{k+kp}{print}\PY{p}{(}foo\PY{p}{)}
+         \PY{k+kp}{names}\PY{p}{(}foo\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{tic\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{tac\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{toe\PYZdq{}}\PY{p}{)}
+         foo\PY{p}{[[}\PY{l+m}{1}\PY{p}{]]} \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{12}\PY{p}{;} foo\PY{p}{[[}\PY{l+m}{2}\PY{p}{]]} \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{22}\PY{p}{;} foo\PY{p}{[[}\PY{l+m}{3}\PY{p}{]]} \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{33}
+         \PY{k+kp}{print}\PY{p}{(}\PY{k+kp}{names}\PY{p}{(}foo\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[1]]
+NULL
+
+[[2]]
+NULL
+
+[[3]]
+NULL
+
+[1] "tic" "tac" "toe"
+
+    \end{Verbatim}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Listas:
+
+\emph{Observe que cada linguagem de programação possui suas
+peculiaridades. No Python, não é exatamente desta maneira que se cria
+uma lista. Outro detalhe importante, o índice da lista no Python começa
+em zero. No R começa em 1!}
+
+Listas são extremamente importantes em linguagens de programação. Isso é
+uma pilha. Eu posso ir alimentando isso a partir do primeiro ou do
+último elemento e eles se mantém em uma ordem 1, 2, 3\ldots{} e eu posso
+remover o primeiro ou último elemento de uma lista. Eu também posso
+fazer um loop invocando todos os elementos de uma lista, o R irá me dar
+cada um até esgotar a lista!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} z \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{1}\PY{o}{:}\PY{l+m}{8}
+         \PY{k+kp}{print}\PY{p}{(}\PY{k+kp}{length}\PY{p}{(}z\PY{p}{)}\PY{p}{)}
+         \PY{k+kp}{print}\PY{p}{(}z\PY{p}{)}
+         z\PY{p}{[}\PY{l+m}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[1] 8
+[1] 1 2 3 4 5 6 7 8
+
+    \end{Verbatim}
+
+    1
+
+    
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Compartilhando estruturas de dados:
+
+\begin{itemize}
+\tightlist
+\item
+  Feather
+\end{itemize}
+
+\emph{Às vezes eu já tenho meus códigos de filtragem e correção de uma
+série de dados em alguma outra linguagem de programação. Antigamente,
+como uma linguagem não ``conversa'' com a outra, eu precisava
+reprogramar tudo. Hoje não é mais assim!}
+
+Suponha que eu tenha uma série de rotinas escritas em Python para buscar
+planilhas Excel em um diretório específico e ler a primeira coluna de
+cada uma delas. Se encontrar um determinado tipo de dado, devo puxar o
+registro e adicioná-lo a um dataset. Depois disso eu farei uma série de
+filtragens e correções com os dados encontrados
+
+O Python por padrão usa uma estrutura para dados chamada Pandas. O R
+infelizmente não trabalha com o Pandas. Não desejamos fazer importações
+de dados. Todo mundo sabe que numa importação, erros podem aparecer e
+daí todo aquele meu processo que era para ser automático fica
+comprometido. Felizmente existe uma solução para isso
+
+É necessário instalar no Jupyter Notebook o pacote Feather. O Feather lê
+e grava um arquivo binário em Python, contendo meu dataset Pandas. E o
+Feather lê e grava o mesmo arquivo binário em R. É desta maneira que se
+trabalha, não só com R x Python mas com toda linguagem de programação!
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Limpar memória:
+
+\emph{esse é um comando universal do R}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kp}{rm}\PY{p}{(}doce.river.data\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Factor:
+
+\emph{É uma característica comum em muitos datasets}
+
+Suponha que eu tenha em um cadastro as opções abaixo. Ao invés de salvar
+nomes numa coluna, eu salvo o factor, ou seja, um código inteiro que
+representa cada uma das variantes possíveis do meu campo. Muitas vezes
+isso causa uma confusão enorme na hora de processar dados. Não adianta
+googlar por ``combo box'', a palavra correta é ``factor''!
+
+\begin{itemize}
+\tightlist
+\item
+  transformar 1-``Male'', 2-``Female'', 3-``Not informed''
+\end{itemize}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Dados grandes:
+
+\emph{Às vezes encontramos no R ou no Python algumas linhas de código
+agindo sobre datasets com uma sintaxe similar ao SQL}
+
+As linguagens de programação, como o R, possuem comandos especiais para
+fazer substituição, vinculações, filtragem de dados em colunas de
+datasets. Normalmente esses comandos costumam ser muito eficientes
+
+No entanto, como muitos usuários de R já se acostumaram a escrever
+consultas ao modo SQL, existe um pacote específico para escrever suas
+consultas no próprio R, ao modo SQL. É bastante funcional e na maioria
+das vezes, basta depois dar um CTRL+C e um CTRL+V naquela sua consulta
+já escrita e trazê-la para dentro do R!
+
+\begin{itemize}
+\tightlist
+\item
+  sintaxe tipo SQL
+\end{itemize}
+
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{exemplo-de-leitura-e-operauxe7uxf5es-em-dados-a-partir-de-um-.csv}{%
+\paragraph{Exemplo de leitura e operações em dados a partir de um
+.csv:}\label{exemplo-de-leitura-e-operauxe7uxf5es-em-dados-a-partir-de-um-.csv}}
+
+\emph{Seguem vários exemplos de operações comuns usados o lidar com
+datasets no R}
+
+Os exemplos foram dados na classe. Recomenda-se pegar um tutorial na
+Datacamp para aprofundar nesse assunto. É realmente fundamental para um
+cientista de dados dominar todos os comandos mais usuais de filtragem,
+busca, substituição e exibição de dados em datasets. Mais de 80\% do
+trabalho se resumirá a estas operações!
+
+Uma vez o seu dataset estando totalmente filtrado, sem nulos e
+corrigido, as operações de plotagem e análises finais dos dados se
+tornarão extremamente simples!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}data.table\PY{p}{)}
+        brazil\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}} fread\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.csv\PYZdq{}}\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}readr\PY{p}{)}
+        x \PY{o}{\PYZlt{}\PYZhy{}}read\PYZus{}csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.csv\PYZdq{}}\PY{p}{)}
+        x\PY{p}{[}\PY{k+kp}{row}\PY{p}{,} column\PY{p}{]}
+        x\PY{p}{[}\PY{l+m}{2}\PY{o}{:}\PY{l+m}{5}\PY{p}{,}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{p}{,}\PY{l+m}{3}\PY{p}{)}\PY{p}{]}
+        x\PY{p}{[}\PY{l+m}{2}\PY{o}{:}\PY{l+m}{5}\PY{p}{,}\PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{date\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{NT\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Extrair uma coluna como vetor:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} flow \PY{o}{\PYZlt{}\PYZhy{}} x\PY{o}{\PYZdl{}}Q
+        x\PY{p}{[[}\PY{l+s}{\PYZdq{}}\PY{l+s}{Q\PYZdq{}}\PY{p}{]]}
+\end{Verbatim}
+
+
+    Extrair como dataset:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} flow \PY{o}{\PYZlt{}\PYZhy{}}x\PY{p}{[}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{Q\PYZdq{}}\PY{p}{]}
+        x\PY{o}{\PYZdl{}}Q\PY{p}{[}\PY{k+kt}{c}\PY{p}{(}\PY{l+m}{1}\PY{o}{:}\PY{l+m}{5}\PY{p}{,}\PY{l+m}{10}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    Lógico:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} x\PY{o}{\PYZdl{}}Q \PY{o}{\PYZgt{}} \PY{l+m}{400}
+\end{Verbatim}
+
+
+    Filtro:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} high\PYZus{}flow \PY{o}{\PYZlt{}\PYZhy{}} x\PY{p}{[}x\PY{o}{\PYZdl{}}Q \PY{o}{\PYZgt{}} \PY{l+m}{400}\PY{p}{,}\PY{p}{]}
+        high\PYZus{}flow
+\end{Verbatim}
+
+
+    Flag:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} x\PY{o}{\PYZdl{}}status\PY{p}{[}x\PY{o}{\PYZdl{}}Q \PY{o}{\PYZgt{}} \PY{l+m}{400}\PY{p}{]} \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{2}
+        View\PY{p}{(}x\PY{p}{)}
+\end{Verbatim}
+
+
+    Um jeito mais fácil:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}tidyr\PY{p}{)}
+\end{Verbatim}
+
+
+    Concatenate (campo) - como lista:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{a\PYZdq{}}\PY{p}{,}\PY{l+s}{\PYZdq{}}\PY{l+s}{b\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{trabalhar-com-bancos-de-dados}{%
+\subsubsection{Trabalhar com bancos de
+dados}\label{trabalhar-com-bancos-de-dados}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    Operações de dataset:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} film\PYZus{}list \PY{o}{\PYZlt{}\PYZhy{}} starwars\PY{o}{\PYZdl{}}films
+        View\PY{p}{(}film\PYZus{}list\PY{p}{)}
+        \PY{k+kp}{names}\PY{p}{(}film\PYZus{}list\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} starwars\PY{o}{\PYZdl{}}name
+        View\PY{p}{(}\PY{k+kp}{names}\PY{p}{(}film\PYZus{}list\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    À moda SQL: (\textbf{Tidyverse})
+
+\emph{procure documentação específica por este nome!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} stars \PY{o}{\PYZlt{}\PYZhy{}} select\PY{p}{(}starwars\PY{p}{,} name\PY{p}{,} height\PY{p}{,} mass\PY{p}{,} homeworld\PY{p}{,} species\PY{p}{)}
+\end{Verbatim}
+
+
+    Com Pipe:
+
+\emph{O Pipe são esses símbolos de \textgreater{}, meio que informando
+que o próximo comando também está ligado}
+
+O R, diferente do Python e outras, é uma linguagem \textbf{não
+identada}. Isso quer dizer que o interpretador R não consegue saber se
+você terminou uma sequência lógica só pela identação. Assim, em caso de
+loops por exemplo, eu preciso
+
+\begin{verbatim}
+{abrir uma chave e colocar o loop dentro dela}
+\end{verbatim}
+
+e tanto faz se
+
+\begin{verbatim}
+eu abro {
+    
+    minha chave
+    
+    e depois vou usando uma 
+        
+        concatenação que me faça sentido
+    
+    ou não
+    
+    o importante ao final é fechar
+
+}
+\end{verbatim}
+
+Como a sintaxe SQL é baseada em um ordenamento de múltiplas linhas, para
+fazer sentido no R foi criado o sistema de Pipe:
+
+\emph{Observe também que a linha do \textbf{mutate} foi quebrada em
+duas. A lógica neste caso é apenas quebrar uma linha, se quiser, depois
+de uma \textbf{vírgula}. No caso, a quebra e a identação são totalmente
+opcionais}
+
+Ela é idêntica a
+
+\begin{verbatim}
+mutate(BMI = height * mass, mass = 0.5 * mass) %>%
+\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} stars \PY{o}{\PYZlt{}\PYZhy{}} starwars \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            select\PY{p}{(}name\PY{p}{,} height\PY{p}{,} mass\PY{p}{,} homeworld\PY{p}{,} species\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            filter\PY{p}{(}species \PY{o}{==} \PY{l+s}{\PYZdq{}}\PY{l+s}{Droid\PYZdq{}}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            select\PY{p}{(}species\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            mutate\PY{p}{(}BMI \PY{o}{=} height \PY{o}{*} mass\PY{p}{,}
+                mass \PY{o}{=} \PY{l+m}{0.5} \PY{o}{*} mass\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            arrange\PY{p}{(}desc\PY{p}{(}BMI\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Desaninhando por um campo de lista:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} sw1 \PY{o}{\PYZlt{}\PYZhy{}} starwars \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            select\PY{p}{(}name\PY{p}{,} films\PY{p}{,} gender\PY{p}{,} height\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            unnest\PY{p}{(}films\PY{p}{,} gender\PY{p}{)}
+\end{Verbatim}
+
+
+    Spread, gather:
+
+\emph{Qual a lógica dessas sequências? Às vezes meu dataset está
+elegante, mas totalmente inadequado para o trabalho que eu vou fazer.
+Então eu removo alguns campos, altero outros, crio campos de categorias
+e empilho/desempilho, aninho/desaninho dados até ter minha estrutura de
+dados do meu jeito!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} sw2 \PY{o}{\PYZlt{}\PYZhy{}} starwars \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            unnest\PY{p}{(}vehicles\PY{p}{)}
+            select\PY{p}{(}name\PY{p}{,} vehicles\PY{p}{,} gender\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            rename\PY{p}{(}character\PYZus{}name \PY{o}{=} name\PY{p}{)}
+        
+        sw\PYZus{}wide \PY{o}{\PYZlt{}\PYZhy{}} sw \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            spread\PY{p}{(}film\PY{p}{,} gender\PY{p}{)}
+        
+        sw\PYZus{}long \PY{o}{\PYZlt{}\PYZhy{}} sw\PYZus{}wide \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            gather \PY{p}{(}\PY{p}{,} films\PY{p}{)}
+        
+        sw\PYZus{}join \PY{o}{\PYZlt{}\PYZhy{}} sw1 \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            left\PYZus{}join\PY{p}{(}sw2\PY{p}{,} by \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{name\PYZdq{}}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{character\PYZus{}name\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{gender\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        
+        sw\PYZus{}summary \PY{o}{\PYZlt{}\PYZhy{}} sw\PYZus{}join \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            group\PYZus{}by\PY{p}{(}films\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            summarise\PY{p}{(}mean\PYZus{}height \PY{o}{=} \PY{k+kp}{mean}\PY{p}{(}height\PY{p}{,} na.rm \PY{o}{=} \PY{k+kc}{TRUE}\PY{p}{)}\PY{p}{,}
+                count \PY{o}{=} n\PY{p}{(}\PY{p}{)}\PY{p}{,}
+                count\PYZus{}males \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}gender \PY{o}{==} \PY{l+s}{\PYZdq{}}\PY{l+s}{male\PYZdq{}}\PY{p}{,} na.rm \PY{o}{=} \PY{k+kc}{TRUE}\PY{p}{)}\PY{p}{,}
+                count\PYZus{}females \PY{o}{=} \PY{k+kp}{sum}\PY{p}{(}gender \PY{o}{==} \PY{l+s}{\PYZdq{}}\PY{l+s}{female\PYZdq{}}\PY{p}{,} na.rm \PY{o}{=} \PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{planejar-operauxe7uxf5es-em-datasets}{%
+\paragraph{Planejar operações em
+datasets}\label{planejar-operauxe7uxf5es-em-datasets}}
+
+As pessos normalmente se apavoram quando percebem que receberam um
+dataset, mas a estrutura dele não está adequada ao que desejamos como
+resultado. Na verdade, a coisa toda é bem mais simples do que parece:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  primeiro tente entender a estrutura do seu dataset original. Mande
+  imprimir o cabeçalho e os 20 primeiros campos, tente ver se existe
+  coerência em tudo o que está lá. Veja se existem muitos campos em
+  branco (NA). Se precisar, faça a contagem de todos os campos para se
+  certificar
+\item
+  se houver mais de um dataset, verifique a lógica de cada um deles,
+  individualmente. Se os dados constantes estiverem coerentes,
+  provavelmente você irá obter bons resultados, independente da
+  estrutura que eles apresentem
+\item
+  se precisar trabalhar um campo \textbf{aninhado}, desaninhe este
+  campo. Transforme cada ítem da sua lista ou dicionário em um registro
+  independente no seu dataset. Isso pode parecer incoerente, mas acelera
+  muito as operações em datasets. Remova campos inúteis. Bole uma
+  política para eliminar os NAs ou para os preencher com alguma coisa
+  que faça sentido
+\item
+  se precisar, esboce em uma folha de papel os seus datasets. E com
+  setinhas, o que você quer relacionar com o que em cada um deles.
+  Consultas são como aquelas máquinas de moer cana: você entra garapa,
+  passa pela máquina e sai garapa. Esboce também o que espera como
+  resultado
+\item
+  às vezes nos atrapalhamos com \textbf{relacionamentos cruzados}. Um
+  campo que aparece como coluna em um, é uma linha em outro dataset! Não
+  tem muito segredo. Consulte a documentação do R e você terá respostas
+  claras de como resolver isso. Um relacionamento cruzado nada mais é do
+  que uma operação particular de \textbf{desempilhamento}
+\item
+  se os datasets ainda se mostrarem complexos demais, tente
+  \textbf{empilhar} ou \textbf{desempilhar}. Às vezes mudando a
+  geometria de um banco de dados, você consegue maravilhas! Leia na
+  documentação como fazer essas operações. Não é incomum algo como
+  \textbf{desempilhe}, \textbf{desempilhe} processe algo, relacione algo
+  e \textbf{empilhe}. Não tenha medo de processar e reprocessar seus
+  datasets
+\item
+  se a coisa estiver pesada demais, crie um dataset demonstrativo mais
+  leve, ou com menos registros
+\item
+  evite processar muitos comandos ao mesmo tempo. Isso pode gerar código
+  elegante, mas normalmente confunde os processadores de datasets. Nem
+  sempre código elegante quer dizer código eficiente! Eu prefiro fazer
+  do jeito mais bobo: uma operação por vez. Normalmente é melhor
+  processar uma operação, por exemplo, relacionando dois datasets e do
+  resultado dela, processar mais uma operação, do que fazer tudo isso de
+  uma só tacada
+\item
+  contabilize tempos de resposta, tamanho e processamento. Faça dois
+  caminhos diferentes e compare. O R é cheio de recursos de avaliação de
+  tempo e memória das suas operações. Quando seus datasets ficarem
+  realmente grandes, essa experiência poder \textbf{realmente} fazer a
+  diferença
+\item
+  esboce no papel além dos seus datasets, também os seus
+  \textbf{relacionamentos}. É muito fácil confundir um \textbf{left
+  join} com um \textbf{inner join}. Não confie na sua memória ou na sua
+  intuição, é melhor diagramar do que depois tentar encontrar a besteira
+\item
+  faça previsões. Se eu esperava receber 111 entradas na minha nova
+  tabela e vieram 108\ldots{} opa! Alguma coisa deu errado! Nunca confie
+  totalmente na sua astúcia como operador de banco de dados. Se preciso,
+  crie campos auxiliares para poder juntar duas colunas e compará-las.
+  Ou para contar o número de determinados objetos. Isso pode fazer toda
+  a diferença!
+\end{enumerate}
+
+    \hypertarget{uso-de-pacotes-no-r}{%
+\subsubsection{Uso de pacotes no R}\label{uso-de-pacotes-no-r}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{o-que-uxe9-um-pacote}{%
+\paragraph{O que é um pacote}\label{o-que-uxe9-um-pacote}}
+
+A descrição aparece lá no começo deste documento. Seguem mais algumas
+operações envolvendo pacotes
+
+    Abrir um pacote:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+\end{Verbatim}
+
+
+    Abrir uma função para um único uso:
+
+\emph{Concluída a operação, a função ou o pacote é descarregado da
+memória da sua máquina}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} river\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}} readr\PY{o}{::}read\PYZus{}c\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.csv\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Conversão de datas:
+
+\emph{A lógica desses \%e, assm como acesso à documentação, está no
+começo deste documento}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} other\PYZus{}day \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{3/4/18\PYZdq{}}
+        other\PYZus{}day\PYZus{}date \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.Date}\PY{p}{(}other\PYZus{}day\PY{p}{,} format \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZpc{}e/\PYZpc{}m/\PYZpc{}\PYZpc{}y\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Formato brasileiro:
+
+\emph{Isso serve para poder aplicar/desaplicar formatação, com
+interpretação dos nomes dos meses em PT-BR}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kp}{Sys.getlocale}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{LC\PYZus{}TIME\PYZdq{}}\PY{p}{)}
+        \PY{k+kp}{Sys.setlocale}\PY{p}{(}\PY{k+kt}{category}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{LC\PYZus{}TIME\PYZdq{}}\PY{p}{,} locale\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{Portuguese\PYZus{}Brazil.1252\PYZdq{}}\PY{p}{)}
+        another\PYZus{}day \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{3 abril, 2018\PYZdq{}}
+        x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.Date}\PY{p}{(}another\PYZus{}day\PY{p}{,} format \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZpc{}e \PYZpc{}B, \PYZpc{}Y\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Data com Timezone:
+
+\emph{Aquele dado colhido lá no Acre foi baseado na UTM de Brasília?
+Isso aqui evita problemas com timezone}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} date\PYZus{}time \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{3 de Abril, 2018 13:00\PYZdq{}}
+        dt \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.POSIXct}\PY{p}{(}date\PYZus{}time\PY{p}{,} format\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZpc{}e de \PYZpc{}b, \PYZpc{}Y \PYZpc{}H:\PYZpc{}M\PYZdq{}}\PY{p}{,} 
+                         tz\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{America/Sao\PYZus{}Paulo\PYZdq{}}\PY{p}{)}
+        dt2
+        \PY{k+kp}{as.numeric}\PY{p}{(}dt2\PY{p}{)}
+        \PY{k+kp}{as.numeric}\PY{p}{(}dt\PY{p}{)}
+        \PY{k+kp}{attr}\PY{p}{(}dt\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{tzone\PYZdq{}}\PY{p}{)}
+        OlsonNames\PY{p}{(}\PY{p}{)}
+        
+        dt\PYZus{}lt \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.POSIXlt}\PY{p}{(}dt2\PY{p}{)}
+        dt\PYZus{}lt\PY{o}{\PYZdl{}}year\PY{l+m}{+1900}
+        dt\PYZus{}lt\PY{o}{\PYZdl{}}mon
+        dt\PYZus{}lt\PY{o}{\PYZdl{}}yday
+\end{Verbatim}
+
+
+    Sumário estatístico de datasets:
+
+\emph{Várias informações estatísticas, com um comando simples. Pode ser
+muito útil para minha primeira aproximação}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+        \PY{k+kp}{summary}\PY{p}{(}river\PYZus{}df\PY{p}{)}
+\end{Verbatim}
+
+
+    Vários recursos de análise da qualidade dos dados coletados:
+
+\emph{Lembre-se de consultar a documentação do Skimr. Sempre que usar um
+pacote no R, ou qualquer linguagem, é conveniente sempre dar uma boa
+olhada na sua documentação. Às vezes um pacote pode ser incompatível com
+a versão de R presente neste Notebook. O Anaconda permite mudar isso. Às
+vezes ele ficou obsoleto e foi deprecado, ou mudou de nome. Às vezes o R
+do Jupyter Notebook não usa exatamente a mesma biblioteca. Consultando a
+documentação, mesmo um pouco de código extremamente desatualizado pode
+ser colocado em ordem para funcionar}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{skimr\PYZdq{}}\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}skimr\PY{p}{)}
+        skim\PY{p}{(}river\PYZus{}df\PY{p}{)}
+\end{Verbatim}
+
+
+    Modelos lineares:
+
+\emph{Fórmula - muito importante para qualquer pacote de modelo!}
+
+A dica do pessoal da USACE é que no R, observe sempre muito atentamente
+o que vem entre parênteses depois de invocar uma função
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Primeiro detalhe}, o que chamamos de \textbf{função}
+  normalmente não é apenas uma reles função. Todas essas linguagens
+  modernas, inclusive o R é totalmente \textbf{orientada a objeto}
+\end{itemize}
+
+Então na verdade, quando eu estou dizendo
+
+\begin{verbatim}
+mg <- unique(...)
+\end{verbatim}
+
+De fato eu estou invocando a \textbf{classe} unique() e materializando
+um \textbf{objeto} desta mesma classe que irá responder pelo nome no
+caso, mg. Essas classes podem e devem ser lidadas conforme toda a teoria
+de \textbf{orientação a objeto}. Eu posso invocar métodos internos, ou
+criar novos métodos, muitas delas possuem diversos atributos, ou eu
+posso criar novos atributos, elas suportam herança, sobrescrição,
+deleção e um bocado de coisas. É legal ler sobre orientação a objeto em
+R. Isso poderá não complicar, mas facilitar imensamente sua vida no
+futuro!
+
+\begin{itemize}
+\item
+  \textbf{Segundo detalhe}, eu passo dentro dos parênteses, os meus
+  \textbf{parâmetros}. Por exemplo, (nome). Eles podem ter um valor
+  padrão (nome=``Camila''). Cada parâmetro é passado na sequência
+  correta e nesse caso não precisa do nome do parâmetro (``Camila,
+  24,''feminino), ou em qualquer ordem, desde que explicitamente
+  (nome=``Camila'', idade=24, sexo=``feminino''), sempre separados por
+  vírgulas. Há alguns parâmetros opcionais, mas em alguns casos, a boa
+  prática de programação me diz que em alguns casos eu assim mesmo devo
+  escrevê-los (sep=``,''). Isso pode tornar a identificação de erros
+  \textbf{muito mais simples} (poxa, como é que eu comi bola aqui, o
+  separador deste meu csv é ``;''!
+\item
+  \textbf{Terceiro detalhe}, a dica da USACE. As classes dos pacotes do
+  R adoram receber \textbf{fórmulas} como parâmetros. Então sempre
+  esteja muito atento ao que está sendo enviado para a criação do seu
+  objeto. Sua fórmula estará lá. Se você comeu bola na fórmula, seu
+  modelo está destruído! Isso não é muito comum em linguagens de
+  programação mais simples. Mas como a maior parte das bibliotecas do R
+  serve para criação de modelos matemáticos e modelos exigem fórmulas,
+  observe onde elas sempre irão aparecer: nos parênteses!
+\end{itemize}
+
+Um caso aqui:
+
+\begin{verbatim}
+model_4 <- lm(NT ~ log(Q) + date + date:Q, data = MOG)
+\end{verbatim}
+
+Onde está minha fórmula de linearização para o Modelo 4?
+
+\begin{verbatim}
+NT ~ log(Q) + date + date:Q
+\end{verbatim}
+
+    O help do Linear Models:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{?}lm
+\end{Verbatim}
+
+
+    \hypertarget{trabalhos-com-datasets}{%
+\subsubsection{Trabalhos com datasets}\label{trabalhos-com-datasets}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    Primeiro exercício de filtragem - dataframe MOG:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kp}{unique}\PY{p}{(}river\PYZus{}df\PY{o}{\PYZdl{}}CODIGO\PYZus{}ESTACAO\PY{p}{)}
+        MOG \PY{o}{\PYZlt{}\PYZhy{}} river\PYZus{}df \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+        	filter\PY{p}{(}CODIGO\PYZus{}ESTACAO \PY{o}{==} \PY{l+s}{\PYZdq{}}\PY{l+s}{MOGU02180\PYZdq{}}\PY{p}{)}
+        skim\PY{p}{(}MOG\PY{p}{)}
+\end{Verbatim}
+
+
+    Sintaxe SQL no R:
+\href{https://stackoverflow.com/questions/37770394/similar-function-to-sql-where-clause-in-r}{exemplo}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}sqldf\PY{p}{)}
+        \PY{k+kp}{system.time}\PY{p}{(}sqldf\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{SELECT * FROM temps1 WHERE country != \PYZsq{}A\PYZsq{}\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        
+        \PY{k+kn}{library}\PY{p}{(}data.table\PY{p}{)}
+        \PY{k+kp}{system.time}\PY{p}{(}setDT\PY{p}{(}temps1\PY{p}{,} key \PY{o}{=} \PY{l+s}{\PYZsq{}}\PY{l+s}{country\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{o}{!}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{A\PYZdq{}}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    Modelo linear:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} model\PYZus{}1 \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}NT \PY{o}{\PYZti{}} Q\PY{p}{,} data \PY{o}{=} MOG\PY{p}{)}
+\end{Verbatim}
+
+
+    Comparação de modelos:
+
+\emph{Observe que é muito importante a fórmula que eu aplico a cada
+modelo!}
+
+Uso do comando Predict()
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} model\PYZus{}1 \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}NT \PY{o}{\PYZti{}} Q\PY{p}{,} data \PY{o}{=} MOG\PY{p}{)}
+        rsq\PYZus{}1 \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{summary}\PY{p}{(}model\PYZus{}1\PY{p}{)}\PY{o}{\PYZdl{}}r.squared
+        
+        summart\PY{p}{(}model\PYZus{}1\PY{p}{)}
+        coefficients\PY{p}{(}model\PYZus{}1\PY{p}{)}\PY{o}{\PYZdl{}}r.squared
+        
+        model\PYZus{}2 \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}NT \PY{o}{\PYZti{}} Q \PY{o}{+} \PY{k+kp}{date}\PY{p}{,} data \PY{o}{=} MOG\PY{p}{)}
+        rsq\PYZus{}1 \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{summary}\PY{p}{(}model\PYZus{}2\PY{p}{)}\PY{o}{\PYZdl{}}r.squared
+        coefficients\PY{p}{(}model\PYZus{}1\PY{p}{)}\PY{o}{\PYZdl{}}r.squared
+        
+        model\PYZus{}3 \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}NT \PY{o}{\PYZti{}} \PY{k+kp}{log}\PY{p}{(}Q\PY{p}{)} \PY{o}{+} \PY{k+kp}{date}\PY{p}{,} data \PY{o}{=} MOG\PY{p}{)}
+        rsq\PYZus{}1 \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{summary}\PY{p}{(}model\PYZus{}3\PY{p}{)}\PY{o}{\PYZdl{}}r.squared
+        
+        model\PYZus{}4 \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}NT \PY{o}{\PYZti{}} \PY{k+kp}{log}\PY{p}{(}Q\PY{p}{)} \PY{o}{+} date \PY{o}{+} \PY{k+kp}{date}\PY{o}{:}Q\PY{p}{,} data \PY{o}{=} MOG\PY{p}{)}
+        rsq\PYZus{}1 \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{summary}\PY{p}{(}model\PYZus{}4\PY{p}{)}\PY{o}{\PYZdl{}}r.squared
+        plot\PY{p}{(}model\PYZus{}4\PY{p}{)}
+\end{Verbatim}
+
+
+    Usando o ggplot2:
+
+\emph{Observe que aes é uma função!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}ggplot2\PY{p}{)}
+        rivers\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}}readr\PY{o}{::}read\PYZus{}csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.csv\PYZdq{}}\PY{p}{)}
+        ggplot\PY{p}{(}data \PY{o}{=} rivers\PYZus{}df\PY{p}{,} mapping \PY{o}{=} aes\PY{p}{(}x\PY{o}{=}Q\PY{p}{,} y\PY{o}{=}NT\PY{p}{,} color \PY{o}{=} CODIGO\PYZus{}ESTACAO\PY{p}{)}\PY{p}{)} \PY{o}{+}
+            geom\PYZus{}point\PY{p}{(}\PY{p}{)} \PY{o}{+}
+            theme\PYZus{}bw\PY{p}{(}\PY{p}{)}
+        rivers\PYZus{}plot\PYZus{}title \PY{o}{\PYZlt{}\PYZhy{}} rivers\PYZus{}plot \PY{o}{+} 
+            ggtitle\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Brazil River Data\PYZdq{}}\PY{p}{)}
+        rivers\PYZus{}plot\PYZus{}title
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} Y \PY{o}{\PYZti{}} X
+        rivers\PYZus{}plot \PY{o}{+}
+            facet\PYZus{}grid\PY{p}{(}\PY{l+m}{.} \PY{o}{\PYZti{}} CODIGO\PYZus{}ESTACAO\PY{p}{,} scales \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{free\PYZus{}x\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Teste:
+
+\emph{Foi criado um campo categórico, separando estação seca de molhada
+e com ele, os gráficos foram partidos entre as duas estações}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{?}\PY{k+kp}{ifelse}
+        \PY{k+kp}{ifelse}\PY{p}{(}\PY{l+m}{4} \PY{o}{\PYZgt{}} \PY{l+m}{5}\PY{p}{,} yes \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{strange\PYZdq{}}\PY{p}{,} no \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{normal\PYZdq{}}\PY{p}{)}
+        x \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{Sys.Date}\PY{p}{(}\PY{p}{)}
+        
+        dry\PYZus{}start \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{6} \PY{c+c1}{\PYZsh{} month number}
+        dry\PYZus{}end \PY{o}{\PYZlt{}\PYZhy{}} \PY{l+m}{9} \PY{c+c1}{\PYZsh{} month number}
+        
+        x\PYZus{}month\PYZus{}number \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.numeric}\PY{p}{(}\PY{k+kp}{format}\PY{p}{(}x\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZpc{}m\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        \PY{k+kp}{ifelse}\PY{p}{(}x\PYZus{}month\PYZus{}number \PY{o}{\PYZgt{}=} \PY{l+m}{6} \PY{o}{\PYZam{}} x\PYZus{}month\PYZus{}number \PY{o}{\PYZlt{}=} \PY{l+m}{9}\PY{p}{,}
+            yes \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{dry\PYZdq{}}\PY{p}{,} no \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{wet\PYZdq{}}\PY{p}{)}
+        
+        river\PYZus{}season \PY{o}{\PYZlt{}\PYZhy{}} rivers\PYZus{}df \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            mutate\PY{p}{(}month\PYZus{}number \PY{o}{=} \PY{k+kp}{as.numeric}\PY{p}{(}\PY{k+kp}{format}\PY{p}{(}\PY{k+kp}{date}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZpc{}m\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                season \PY{o}{=} \PY{k+kp}{ifelse}\PY{p}{(}x\PYZus{}month\PYZus{}number \PY{o}{\PYZgt{}=} \PY{l+m}{6} \PY{o}{\PYZam{}} x\PYZus{}month\PYZus{}number \PY{o}{\PYZlt{}=} \PY{l+m}{9}\PY{p}{,}
+                yes \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{dry\PYZdq{}}\PY{p}{,} no \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{wet\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        
+        season\PYZus{}plot \PY{o}{\PYZlt{}\PYZhy{}} ggplot\PY{p}{(}river\PYZus{}season\PY{p}{,}
+                              aes\PY{p}{(}x\PY{o}{=}Q\PY{p}{,} y\PY{o}{=}NT\PY{p}{,} color\PY{o}{=}CODIGO\PYZus{}ESTACAO\PY{p}{)}\PY{p}{)} \PY{o}{+}
+        geom\PYZus{}point\PY{p}{(}\PY{p}{)} \PY{o}{+}
+            facet\PYZus{}grid\PY{p}{(}season \PY{o}{\PYZti{}} CODIGO\PYZus{}ESTACAO\PY{p}{,} scales\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{free\PYZus{}x\PYZdq{}}\PY{p}{)}
+        season\PYZus{}plot
+\end{Verbatim}
+
+
+    Indicação do erro padrão:
+
+\emph{Para fórmula é necessário definir os eixos x e y}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} season\PYZus{}plot \PY{o}{+}
+            geom\PYZus{}smooth\PY{p}{(}method \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{lm\PYZdq{}}\PY{p}{,} formula \PY{o}{=} y \PY{o}{\PYZti{}} x\PY{p}{)}
+\end{Verbatim}
+
+
+    Para desativar:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} geom\PYZus{}smooth\PY{p}{(}method \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{lm\PYZdq{}}\PY{p}{,} formula \PY{o}{=} y \PY{o}{\PYZti{}}x\PY{p}{,} se \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        Error in geom\_smooth(method = "lm", formula = y \textasciitilde{} x, se = FALSE): não foi possível encontrar a função "geom\_smooth"
+    Traceback:
+    
+
+    \end{Verbatim}
+
+    gráfico de caixas:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} boxplot\PYZus{}q \PY{o}{\PYZlt{}\PYZhy{}} ggplot\PY{p}{(}river\PYZus{}season\PY{p}{,} aes\PY{p}{(}x\PY{o}{=}CODIGO\PYZus{}ESTACAO\PY{p}{,} y\PY{o}{=}Q\PY{p}{)}\PY{p}{)} \PY{o}{+}
+            geom\PYZus{}boxplot\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    redimensionando e colocando legendas:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} boxplot\PYZus{}q \PY{o}{+} facet\PYZus{}grid\PY{p}{(}\PY{l+m}{.} \PY{o}{\PYZti{}} CODIGO\PYZus{}ESTACAO\PY{p}{,} scales\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{free\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    escala log 10:
+
+\emph{cuidado ao plotar pontos com log(0)!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} boxplot\PYZus{}q \PY{o}{+} scale\PYZus{}y\PYZus{}log10\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    estações coloridas e separadas:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} boxplot\PYZus{}q\PYZus{}season \PY{o}{\PYZlt{}\PYZhy{}} ggplot\PY{p}{(}river\PYZus{}season\PY{p}{,} 
+                            aes\PY{p}{(}x\PY{o}{=}CODIGO\PYZus{}ESTACAO\PY{p}{,} 
+                                y\PY{o}{=}Q\PY{p}{,}
+                                fill\PY{o}{=}season\PY{p}{)}\PY{p}{)} \PY{o}{+}
+        geom\PYZus{}boxplot\PY{p}{(}\PY{p}{)} \PY{o}{+}
+        scale\PYZus{}y\PYZus{}log10\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Salvar o gráfico em pdf:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} ggsave\PY{p}{(}filename \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{output/discharge\PYZus{}boxplot.pdf\PYZdq{}}\PY{p}{,}
+            boxplot\PYZus{}q\PYZus{}season\PY{p}{,}
+            height \PY{o}{=} \PY{l+m}{5}\PY{p}{,} width \PY{o}{=} \PY{l+m}{7}\PY{p}{)}
+\end{Verbatim}
+
+
+    Criando um loop:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kr}{for} \PY{p}{(}station \PY{k+kr}{in} station\PYZus{}codes\PY{p}{)} \PY{p}{\PYZob{}}
+            \PY{k+kp}{print}\PY{p}{(}station\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    Filtrando com loop por estação, plotando e salvando em pdf:
+
+\emph{Select para colunas e filter para linhas}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kr}{for} \PY{p}{(}station \PY{k+kr}{in} station\PYZus{}codes\PY{p}{)} \PY{p}{\PYZob{}}
+          \PY{k+kp}{print}\PY{p}{(}station\PY{p}{)}
+          current\PYZus{}data \PY{o}{\PYZlt{}\PYZhy{}} filter\PY{p}{(}rivers\PYZus{}df\PY{p}{,} CODIGO\PYZus{}ESTACAO \PY{o}{==} station\PY{p}{)}
+          station\PYZus{}model \PY{o}{\PYZlt{}\PYZhy{}} lm\PY{p}{(}NT \PY{o}{\PYZti{}}\PY{k+kp}{log}\PY{p}{(}Q\PY{p}{)} \PY{o}{+} \PY{k+kp}{date}\PY{p}{,} data \PY{o}{=} current\PYZus{}data\PY{p}{)}
+          current\PYZus{}data \PY{o}{\PYZlt{}\PYZhy{}} current\PYZus{}data \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            mutate\PY{p}{(}preds \PY{o}{=} predict\PY{p}{(}station\PYZus{}model\PY{p}{)}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} NT = 1.2*Q + 0.5}
+          station\PYZus{}plot \PY{o}{\PYZlt{}\PYZhy{}} ggplot\PY{p}{(}current\PYZus{}data\PY{p}{,} aes\PY{p}{(}x\PY{o}{=}NT\PY{p}{,} y\PY{o}{=}preds\PY{p}{)}\PY{p}{)} \PY{o}{+}
+            geom\PYZus{}point\PY{p}{(}\PY{p}{)} \PY{o}{+}
+            ggtitle\PY{p}{(}station\PY{p}{)}
+          \PY{k+kp}{print}\PY{p}{(}station\PYZus{}plot\PY{p}{)}
+          station\PYZus{}filename \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{paste0}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{output/preds\PYZus{}obs\PYZdq{}}\PY{p}{,} station\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{.pdf\PYZdq{}}\PY{p}{)}
+          ggsave\PY{p}{(}station\PYZus{}filename\PY{p}{,} station\PYZus{}plot\PY{p}{,} height \PY{o}{=} \PY{l+m}{5}\PY{p}{,} width \PY{o}{=} \PY{l+m}{7}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    Usando o pacote de interatividade Plotly:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{plotly\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Fazendo um gráfico interativo rápido:
+
+\emph{isso é bom para HTML}
+
+\emph{outro pacote é R Shiny}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}plotly\PY{p}{)}
+        
+        nt\PYZus{}q\PYZus{}plot \PY{o}{\PYZlt{}\PYZhy{}} ggplot\PY{p}{(}brazil\PYZus{}df\PY{p}{,} aes\PY{p}{(}x\PY{o}{=}Q\PY{p}{,} y\PY{o}{=}NT\PY{p}{,} color\PY{o}{=}CODIGO\PYZus{}ESTACAO\PY{p}{)}\PY{p}{)} \PY{o}{+} 
+            geom\PYZus{}point\PY{p}{(}\PY{p}{)}
+        nt\PYZus{}q\PYZus{}plot\PYZus{}interactive \PY{o}{\PYZlt{}\PYZhy{}} ggplotly\PY{p}{(}nt\PYZus{}q\PYZus{}plot\PY{p}{)}
+        nt\PYZus{}q\PYZus{}plot\PYZus{}interactive
+\end{Verbatim}
+
+
+    \hypertarget{inuxedcio-dos-estudos-em-egret}{%
+\subsubsection{Início dos estudos em
+EGRET}\label{inuxedcio-dos-estudos-em-egret}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    Usos (com D-3):
+\href{https://owi.usgs.gov/vizlab/water-use-15/\#view=USA\&category=total}{exemplo}
+
+    Outros:
+
+\href{https://github.com/USGS-VIZLAB}{aqui} e
+
+\href{https://owi.usgs.gov/vizlab/hurricane-irma/}{aqui}
+
+    EGRET - Exploration and Graphics for River Trends
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\emph{É um pacote em R para análises em mudanças de qualidade de água e
+vazão de rios de longo prazo. Inclui métodos de qualidade de água
+(Weighted Regressions on Time, Discharge and Season - WRTDS)}
+
+Lindsay Carr and Laura DeCicco
+
+USGS Data Science \href{github.com/USGS-R/EGRET}{fonte}
+
+Guia do usuário: \href{pubs.usgs.gov/tm/04/a10}{aqui}
+
+No github: \href{usgs-r.github.io/EGRET}{aqui}
+
+Geral da USGS:
+
+\begin{verbatim}
+github.com/USGS-R/...
+\end{verbatim}
+
+Exemplo:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} github.com\PY{o}{/}USGS\PY{o}{\PYZhy{}}R\PY{o}{/}WREG
+\end{Verbatim}
+
+
+    Entrada de dados:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}readr\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} Sample \PY{o}{\PYZlt{}\PYZhy{}} read\PYZus{}csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{SAPU02900.csv\PYZdq{}}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            select\PY{p}{(}\PY{k+kp}{date}\PY{p}{,} status\PY{p}{,} NT\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            compressData\PY{p}{(}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            populateSampleColumns\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} Daily \PY{o}{\PYZlt{}\PYZhy{}} read\PYZus{}csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{SETA04600.csv\PYZdq{}}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            select\PY{p}{(}dateTime \PY{o}{=} \PY{k+kp}{date}\PY{p}{,} value\PY{o}{=}Q\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            populateDaily\PY{p}{(}qConvert \PY{o}{=} \PY{l+m}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{}assumes Q is cms}
+\end{Verbatim}
+
+
+    Programático:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} INFO \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{data.frame}\PY{p}{(}
+                        Param.units \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{mg/L\PYZdq{}}\PY{p}{,}
+                        shortName \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{SETA04600\PYZdq{}}\PY{p}{,}
+                        paramShortName \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Total Nitrogen\PYZdq{}}\PY{p}{,}
+                        drainSqKm \PY{o}{=} \PY{l+m}{100}\PY{p}{,}
+                        constitAbbrev \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{TN\PYZdq{}}\PY{p}{,}
+                        staAbbrev \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{SETA\PYZdq{}}\PY{p}{,}
+                        paStart \PY{o}{=} \PY{l+m}{10}\PY{p}{,}
+                        paLong \PY{o}{=} \PY{l+m}{12}\PY{p}{,}
+                        stringsAsFactors \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)}
+        
+        eList \PY{o}{\PYZlt{}\PYZhy{}} mergeReport\PY{p}{(}INFO\PY{p}{,} Daily\PY{p}{,} Sample\PY{p}{)}
+\end{Verbatim}
+
+
+    Carregando o Egret:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{EGRET\PYZdq{}}\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}EGRET\PY{p}{)}
+        \PY{o}{?}\PY{o}{?}EGRET
+        
+        eList \PY{o}{\PYZlt{}\PYZhy{}} Choptank\PYZus{}eList
+        Daily \PY{o}{\PYZlt{}\PYZhy{}} eList\PY{o}{\PYZdl{}}Daily
+        Sample \PY{o}{\PYZlt{}\PYZhy{}} eList\PY{o}{\PYZdl{}}Sample
+        INFO \PY{o}{\PYZlt{}\PYZhy{}} eList\PY{o}{\PYZdl{}}INFO
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+also installing the dependencies 'dotCall64', 'spam', 'dataRetrieval', 'fields', 'truncnorm'
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+package 'dotCall64' successfully unpacked and MD5 sums checked
+package 'spam' successfully unpacked and MD5 sums checked
+package 'dataRetrieval' successfully unpacked and MD5 sums checked
+package 'fields' successfully unpacked and MD5 sums checked
+package 'truncnorm' successfully unpacked and MD5 sums checked
+package 'EGRET' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+	C:\textbackslash{}Users\textbackslash{}epasseto\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Temp\textbackslash{}Rtmpo75EWs\textbackslash{}downloaded\_packages
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+starting httpd help server {\ldots} done
+
+    \end{Verbatim}
+
+    
+    
+    No EGRET, o primeiro argumento será sempre eList:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} plot\PY{p}{(}eList\PY{p}{)}
+\end{Verbatim}
+
+
+    Exemplo da documentação pdf do EGRET:
+
+\emph{Isso é para vaões!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} plotFlowSingle\PY{p}{(}eList\PY{p}{,} istat\PY{o}{=}\PY{l+m}{7}\PY{p}{,}qUnit\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{thousandCfs\PYZdq{}}\PY{p}{)}
+        plotSDLogQ\PY{p}{(}eList\PY{p}{)}
+        plotQTimeDaily\PY{p}{(}eList\PY{p}{,} qLower\PY{o}{=}\PY{l+m}{1}\PY{p}{,}qUnit\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+        plotFour\PY{p}{(}eList\PY{p}{,} qUnit\PY{o}{=}\PY{l+m}{3}\PY{p}{)} 
+        plotFourStats\PY{p}{(}eList\PY{p}{,} qUnit\PY{o}{=}\PY{l+m}{3}\PY{p}{)}
+\end{Verbatim}
+
+
+    Loadflex no Github:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} USGS\PY{o}{\PYZhy{}}R\PY{o}{/}loadflex
+\end{Verbatim}
+
+
+    Habilitar repositórios CRAN \& GRAN:
+
+\emph{O repositório CRAN é de qualquer biblioteca R que seja
+compreensível, então é um repositório mais aberto}
+
+\emph{E o GRAN é a mesma coisa, com o G de ``Geological''}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} rprofile\PYZus{}path \PY{o}{=} \PY{k+kp}{file.path}\PY{p}{(}\PY{k+kp}{Sys.getenv}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{HOME\PYZdq{}}\PY{p}{)}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{.Rprofile\PYZdq{}}\PY{p}{)}
+        \PY{k+kp}{write}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZbs{}noptions(repos=c(getOption(\PYZbs{}\PYZsq{}repos\PYZbs{}\PYZsq{}),}
+        \PY{l+s}{    CRAN=\PYZbs{}\PYZsq{}https://cloud.r\PYZhy{}project.org\PYZbs{}\PYZsq{},}
+        \PY{l+s}{    USGS=\PYZbs{}\PYZsq{}https://owi.usgs.gov/R\PYZbs{}\PYZsq{}))\PYZbs{}n\PYZsq{}}\PY{p}{,}
+              rprofile\PYZus{}path\PY{p}{,} 
+              append \PY{o}{=}  \PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    Instalando:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{loadflex\PYZdq{}}\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}loadflex\PY{p}{)}
+\end{Verbatim}
+
+
+    Um blog útil: \href{owi.usgs.gov/blog}{aqui}
+
+USGS SPARROW: Fontes poluidoras - atmosfera (despejos lineares) - solo
+(despejos lineares) - despejos pontuais
+
+Ponto de controle (monitoramento)
+
+Mechanistic constraints + statistical features - salinidade - vazões - N
+- Ph - carbono orgânico - sedimento em suspensão - coliformes -
+patogênicos
+
+Rshiny Mapper
+
+    \hypertarget{markdown}{%
+\subsubsection{Markdown}\label{markdown}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Modo fácil de escrever código e misturar com texto formatado
+
+\emph{Todas essas caixas de texto aqui do Jupyter Notebook estão em
+Markdown!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} knit
+        \PY{l+s+sb}{``}`\PY{p}{\PYZob{}}r setup\PY{p}{,} include\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{\PYZcb{}}
+        knitr\PY{o}{::}opts\PYZus{}chunk\PY{o}{\PYZdl{}}set\PY{p}{(}echo \PY{o}{=} \PY{k+kc}{TRUE}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{terceiro-dia-r-aplicado}{%
+\paragraph{Terceiro dia, R aplicado}\label{terceiro-dia-r-aplicado}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+    Instalar pacotes:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} install.packages\PY{p}{(}\PY{k+kt}{c}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{ggthemes\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{maptools\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{mapdata\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{brazilmaps\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{ggmap\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{readx1\PYZdq{}}\PY{p}{,}
+                           \PY{l+s}{\PYZdq{}}\PY{l+s}{openxlsx\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{sf\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{RPostgreSQL\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{toxEval\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{RSQLite\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{MonetDBLite\PYZdq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Ler o .csv e transformar em .rds:
+
+\emph{É um formato de arquivo binário, mais compacto e eficiente do que
+o clássico .csv}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} brazil\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}} readr\PY{o}{::}read\PYZus{}csv\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.csv\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Salvar para um arquivo binário rds:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kp}{saveRDS}\PY{p}{(}brazil\PYZus{}df\PY{p}{,} file \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.rds\PYZdq{}}\PY{p}{)}
+        
+        brazil\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{readRDS}\PY{p}{(}file \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{data/brazil\PYZus{}df.rds\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Para testar tempos de carregamento de pacotes de dados com vários
+sistemas de leitura:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kp}{system.time}\PY{p}{(}\PY{p}{\PYZob{}}
+          test\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}} read.csv\PY{p}{(}file\PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{data/test.csv\PYZdq{}}\PY{p}{)}
+        \PY{p}{\PYZcb{}}\PY{p}{)}
+        
+        \PY{k+kp}{system.time}\PY{p}{(}\PY{p}{\PYZob{}}
+          test\PYZus{}df\PYZus{}readr \PY{o}{\PYZlt{}\PYZhy{}} readr\PY{o}{::}read\PYZus{}csv\PY{p}{(}file\PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{data/test.csv\PYZdq{}}\PY{p}{)}
+        \PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Lendo com filtro:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} read\PYZus{}filter \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{readRDS}\PY{p}{(}file\PYZus{}name\PY{p}{)}
+\end{Verbatim}
+
+
+    Ler, agrupar e criar um sumário:
+
+\emph{Existe a possibilidade de ler em um csv apenas as colunas que te
+interessam, o que poupa um esforço enorme!}
+
+    Ler e gravar em planilhas Excel:
+
+    Sincronizar um banco de dados externo:
+
+    \hypertarget{criar-seus-pruxf3prios-pacotes}{%
+\paragraph{Criar seus próprios
+pacotes}\label{criar-seus-pruxf3prios-pacotes}}
+
+    Devtools:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}devtools\PY{p}{)}
+        
+        
+        \PY{k+kn}{library}\PY{p}{(}toxEval\PY{p}{)}
+        
+        explore\PYZus{}endpoints\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Mapa interativo da USGS:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} install\PYZus{}github\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{USGS\PYZhy{}R/EflowStats\PYZdq{}}\PY{p}{)}
+        
+        \PY{o}{?}USGS\PY{o}{\PYZhy{}}R\PY{o}{/}EflowStats
+        
+        \PY{o}{?}\PY{o}{?}USGS\PY{o}{\PYZhy{}}R\PY{o}{/}EflowStats
+        
+        \PY{k+kn}{library}\PY{p}{(}USGS\PY{o}{\PYZhy{}}R\PY{o}{/}EflowStats\PY{p}{)}
+\end{Verbatim}
+
+
+    Mapas:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} install.packages \PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{brazilmaps\PYZdq{}}\PY{p}{)}
+        
+        \PY{k+kn}{library}\PY{p}{(}ggplot2\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}ggthemes\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}dplyr\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}maptools\PY{p}{)}
+        \PY{k+kn}{library}\PY{p}{(}mapdata\PY{p}{)}
+        
+        whole\PYZus{}br \PY{o}{\PYZlt{}\PYZhy{}} map\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{world\PYZsq{}}\PY{p}{,} \PY{l+s}{\PYZsq{}}\PY{l+s}{brazil\PYZsq{}}\PY{p}{,} fill\PY{o}{=}\PY{k+kc}{TRUE}\PY{p}{,} plot\PY{o}{=}\PY{k+kc}{FALSE}\PY{p}{)}
+        
+        whole\PYZus{}br\PYZus{}df \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{data.frame}\PY{p}{(}x\PY{o}{=}whole\PYZus{}br\PY{p}{[[}\PY{l+m}{1}\PY{p}{]]}\PY{p}{,} y\PY{o}{=}whole\PYZus{}br\PY{p}{[[}\PY{l+m}{2}\PY{p}{]]}\PY{p}{)}
+        
+        fake\PYZus{}data \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kt}{data.frame}\PY{p}{(}
+          x \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{\PYZhy{}47.8}\PY{p}{,} \PY{l+m}{\PYZhy{}44.2}\PY{p}{)}\PY{p}{,}
+          y \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{\PYZhy{}15.75}\PY{p}{,} \PY{l+m}{\PYZhy{}2.6}\PY{p}{)}\PY{p}{,}
+          measured \PY{o}{=} \PY{k+kt}{c}\PY{p}{(}\PY{l+m}{10}\PY{p}{,} \PY{l+m}{5}\PY{p}{)}
+        \PY{p}{)}
+\end{Verbatim}
+
+
+    Dados como um fator:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} fake\PYZus{}data \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kp}{as.factor}\PY{p}{(}fake\PYZus{}data\PY{o}{\PYZdl{}}measured\PY{p}{)}
+        
+        ggplot\PY{p}{(}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}polygon\PY{p}{(}data \PY{o}{=} whole\PYZus{}br\PYZus{}df\PY{p}{,} aes\PY{p}{(}x\PY{o}{=}x\PY{p}{,}y\PY{o}{=}y\PY{p}{)}\PY{p}{,}
+                        fill \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{pink\PYZdq{}}\PY{p}{,}
+                        color \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{white\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}point\PY{p}{(}data \PY{o}{=} fake\PYZus{}data\PY{p}{,}
+                    aes\PY{p}{(}x\PY{o}{=}x\PY{p}{,} y\PY{o}{=}y\PY{p}{,} color\PY{o}{=}measured\PY{p}{)}\PY{p}{)}\PY{o}{+}
+          coord\PYZus{}map\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{polyconic\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          theme\PYZus{}map\PY{p}{(}\PY{p}{)}
+        
+        install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{ggspatial\PYZdq{}}\PY{p}{)}
+        
+          \PY{k+kn}{library}\PY{p}{(}brazilmaps\PY{p}{)}
+          \PY{k+kn}{library}\PY{p}{(}sf\PY{p}{)}
+          \PY{k+kn}{library}\PY{p}{(}ggspatial\PY{p}{)}
+\end{Verbatim}
+
+
+    Outra versão, com o buffer para destacar o país:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} ggplot\PY{p}{(}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}polygon\PY{p}{(}data \PY{o}{=} whole\PYZus{}br\PYZus{}df\PY{p}{,} aes\PY{p}{(}x\PY{o}{=}x\PY{p}{,}y\PY{o}{=}y\PY{p}{)}\PY{p}{,}
+                        size\PY{o}{=}\PY{l+m}{10}\PY{p}{,}
+                        color \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{red\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}sf\PY{p}{(}data \PY{o}{=} st\PYZus{}geometry\PY{p}{(}state\PYZus{}map\PY{p}{)}\PY{p}{,}
+                   fill\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{pink\PYZdq{}}\PY{p}{,} color\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{blue\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}point\PY{p}{(}data \PY{o}{=} fake\PYZus{}data\PY{p}{,} size \PY{o}{=} \PY{l+m}{5}\PY{p}{,}
+                    aes\PY{p}{(}x\PY{o}{=}x\PY{p}{,} y\PY{o}{=}y\PY{p}{,} color\PY{o}{=}measured\PY{p}{)}\PY{p}{)}\PY{o}{+}
+          coord\PYZus{}sf\PY{p}{(}datum \PY{o}{=} \PY{k+kc}{NA}\PY{p}{,} expand \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)} \PY{o}{+}
+          theme\PYZus{}map\PY{p}{(}\PY{p}{)}
+        
+        estado do Rio\PY{o}{:}
+        \PY{c+c1}{\PYZsh{} Adding states}
+          state\PYZus{}map \PY{o}{\PYZlt{}\PYZhy{}} get\PYZus{}brmap\PY{p}{(}geo \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{State\PYZdq{}}\PY{p}{,} class \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{sf\PYZdq{}}\PY{p}{)}
+        
+          rio\PYZus{}map \PY{o}{\PYZlt{}\PYZhy{}} get\PYZus{}brmap\PY{p}{(}geo \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{State\PYZdq{}}\PY{p}{,}
+                             geo.filter \PY{o}{=} \PY{k+kt}{list}\PY{p}{(}State \PY{o}{=} \PY{l+m}{33}\PY{p}{)}\PY{p}{,}
+                             class \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{sf\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} ggplot\PY{p}{(}\PY{p}{)} \PY{o}{+}
+          \PY{c+c1}{\PYZsh{}geom\PYZus{}polygon(data = whole\PYZus{}br\PYZus{}df, aes(x=x,y=y),}
+          \PY{c+c1}{\PYZsh{}              size=10,}
+          \PY{c+c1}{\PYZsh{}              fill = \PYZdq{}re d\PYZdq{}) +}
+          geom\PYZus{}sf\PY{p}{(}data \PY{o}{=} st\PYZus{}geometry\PY{p}{(}state\PYZus{}map\PY{p}{)}\PY{p}{,}
+                   fill\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{pink\PYZdq{}}\PY{p}{,} color\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{blue\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}sf\PY{p}{(}data \PY{o}{=} st\PYZus{}geometry\PY{p}{(}rio\PYZus{}map\PY{p}{)}\PY{p}{,}
+                  color\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{red\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}point\PY{p}{(}data \PY{o}{=} fake\PYZus{}data\PY{p}{,} size \PY{o}{=} \PY{l+m}{5}\PY{p}{,}
+                    aes\PY{p}{(}x\PY{o}{=}x\PY{p}{,} y\PY{o}{=}y\PY{p}{,} color\PY{o}{=}measured\PY{p}{)}\PY{p}{)}\PY{o}{+}
+          coord\PYZus{}sf\PY{p}{(}datum \PY{o}{=} \PY{k+kc}{NA}\PY{p}{,} expand \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)} \PY{o}{+}
+          theme\PYZus{}map\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Rios na Amazônia:
+
+\emph{Eu preciso apontar que a geometria é a mesma do shape anterior!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} amazon\PYZus{}rivers\PYZus{}shp \PY{o}{\PYZlt{}\PYZhy{}} st\PYZus{}read\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data/lineaire\PYZus{}10km.shp\PYZdq{}}\PY{p}{)}
+        st\PYZus{}crs\PY{p}{(}amazon\PYZus{}rivers\PYZus{}shp\PY{p}{)} \PY{o}{\PYZlt{}\PYZhy{}} st\PYZus{}crs\PY{p}{(}state\PYZus{}map\PY{p}{)}
+        
+        clipped\PYZus{}amazon \PY{o}{\PYZlt{}\PYZhy{}} st\PYZus{}intersection\PY{p}{(}st\PYZus{}geometry\PY{p}{(}amazon\PYZus{}rivers\PYZus{}shp\PY{p}{)}\PY{p}{,}
+                                          st\PYZus{}geometry\PY{p}{(}state\PYZus{}map\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} ggplot\PY{p}{(}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}polygon\PY{p}{(}data \PY{o}{=} whole\PYZus{}br\PYZus{}df\PY{p}{,} aes\PY{p}{(}x\PY{o}{=}x\PY{p}{,}y\PY{o}{=}y\PY{p}{)}\PY{p}{,}
+                       size\PY{o}{=}\PY{l+m}{10}\PY{p}{,}
+                       color \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{red\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}sf\PY{p}{(}data \PY{o}{=} st\PYZus{}geometry\PY{p}{(}state\PYZus{}map\PY{p}{)}\PY{p}{,}
+                  fill\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{pink\PYZdq{}}\PY{p}{,} color\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{blue\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}sf\PY{p}{(}data \PY{o}{=} st\PYZus{}geometry\PY{p}{(}rio\PYZus{}map\PY{p}{)}\PY{p}{,}
+                  color\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{red\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}sf\PY{p}{(}data \PY{o}{=} clipped\PYZus{}amazon\PY{p}{,}
+                  color \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{blue\PYZdq{}}\PY{p}{)} \PY{o}{+}
+          geom\PYZus{}point\PY{p}{(}data \PY{o}{=} fake\PYZus{}data\PY{p}{,} size \PY{o}{=} \PY{l+m}{5}\PY{p}{,}
+                     aes\PY{p}{(}x\PY{o}{=}x\PY{p}{,} y\PY{o}{=}y\PY{p}{,} color\PY{o}{=}measured\PY{p}{)}\PY{p}{)} \PY{o}{+}
+          coord\PYZus{}sf\PY{p}{(}datum \PY{o}{=} \PY{k+kc}{NA}\PY{p}{,} expand \PY{o}{=} \PY{k+kc}{FALSE}\PY{p}{)} \PY{o}{+}
+          theme\PYZus{}map\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Criação de pacotes R:
+
+\begin{itemize}
+\tightlist
+\item
+  licença cc0 - open source
+\end{itemize}
+
+\emph{Não esqueça de dar um Install and Restart para ativar o seu novo
+pacote!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}TestePacote\PY{p}{)}
+        hello\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Eduardo\PYZdq{}}\PY{p}{)}
+        \PY{o}{?}hello
+\end{Verbatim}
+
+
+    Em hello.R:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} hello \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}nome \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{ANA\PYZdq{}}\PY{p}{)} \PY{p}{\PYZob{}}
+          \PY{k+kp}{print}\PY{p}{(}\PY{k+kp}{paste}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Hello, \PYZdq{}}\PY{p}{,} nome\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    Em Description:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} Package\PY{o}{:} TestePacote
+        Type\PY{o}{:} Package
+        Title\PY{o}{:} Teste em pacotes R
+        Version\PY{o}{:} \PY{l+m}{0.1}\PY{l+m}{.0}
+        Author\PY{o}{:} Eduardo Passeto
+        Maintainer\PY{o}{:} \PY{o}{\PYZlt{}}epasseto\PY{o}{@}gmail.com\PY{o}{\PYZgt{}}
+        Description\PY{o}{:} Este pacote serve para demonstrar como o sistema de criar pacotes funciona
+        License\PY{o}{:} What license is it under\PY{o}{?}
+        \PY{k+kp}{Encoding}\PY{o}{:} UTF\PY{l+m}{\PYZhy{}8}
+        LazyData\PY{o}{:} true
+\end{Verbatim}
+
+
+    Usar padrão Roxygen2:
+
+\emph{Não se esqueça de ativar em ``package'' e ``configuration'',
+ativando o check box!}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} install.packages\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{roxygen2\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Padrão Roxygen:
+
+\begin{verbatim}
+@title ...
+
+@description ...
+
+@param data ...
+\end{verbatim}
+
+\emph{A importância do Roxygen é que ele mantém a documentação junto com
+a função e assim ela fica sempre organizada e atualizada}
+
+    Exemplo completo:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{}\PYZsq{} @title Printing hello}
+        \PY{c+c1}{\PYZsh{}\PYZsq{} @author Eduardo Passeto}
+        \PY{c+c1}{\PYZsh{}\PYZsq{} @param name a strign of a name to print}
+        \PY{c+c1}{\PYZsh{}\PYZsq{} @export\PYZsq{}}
+        \PY{c+c1}{\PYZsh{}\PYZsq{}}
+        \PY{c+c1}{\PYZsh{}\PYZsq{}}
+        hello \PY{o}{\PYZlt{}\PYZhy{}} \PY{k+kr}{function}\PY{p}{(}nome \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{ANA\PYZdq{}}\PY{p}{)} \PY{p}{\PYZob{}}
+          \PY{k+kp}{print}\PY{p}{(}\PY{k+kp}{paste}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Hello, \PYZdq{}}\PY{p}{,} nome\PY{p}{)}\PY{p}{)}
+        \PY{p}{\PYZcb{}}
+\end{Verbatim}
+
+
+    Em outra janela de R, eu posso carregar meu novo pacote:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{library}\PY{p}{(}TestePacote\PY{p}{)}
+\end{Verbatim}
+
+
+    Para chamar minha função:
+
+\begin{verbatim}
+hello(...)
+\end{verbatim}
+
+\emph{Isso aqui aparece como origem}
+
+\begin{verbatim}
+library{testePacote}
+\end{verbatim}
+
+    Tutorial do shiny: \href{shiny.rstudio.com/tutorial}{aqui}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

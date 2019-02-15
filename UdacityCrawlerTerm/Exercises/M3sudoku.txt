@@ -1,0 +1,31 @@
+list1=[[1,2,3],[2,3,1],[3,1,2]]
+list1=[[1,2,3,4],[2,3,1,3],[3,1,2,3],[4,4,4,4]]
+
+def check_sudoku(sudoku):
+    k=0
+    while k < len(sudoku): #k=line
+        list=sudoku[k]
+        i=0
+        while i < len(list): #first comparision column
+            j=i+1
+            while j < len(list): #second comparision column
+                if list[i] == list[j]: 
+                    return False
+                j=j+1
+            i=i+1
+        k=k+1
+    k=0
+    while k < len(sudoku): #k=column
+        i=0
+        while i < len(list): #first comparision line
+            j=i+1
+            while j < len(list): #second comparision line
+                list1=sudoku[i]
+                list2=sudoku[j]
+                if list1[k] == list2[k]:
+                    return False
+                j=j+1
+            i=i+1
+        k=k+1    
+    return True
+print check_sudoku(list1)

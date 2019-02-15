@@ -1,0 +1,24 @@
+#Procedures and If
+
+#Define a procedure, unique, that takes three numbers as its inputs and returns
+#the Boolean value True if all three numbers are different. Otherwise, it should
+#return the Boolean value False.
+
+def unique(a, b, c):
+    winner = a
+    if b == winner:
+        return False
+    if c == winner:
+        return False
+    if b == c:
+        return False
+    return True
+
+print unique(1, 2, 3)
+#>>> True
+
+print unique(1, 0, 1)
+#>>> False
+
+print unique(7, 7, 7)
+#>>> False
